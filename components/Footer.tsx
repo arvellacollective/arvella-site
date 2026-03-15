@@ -2,8 +2,9 @@
 
 import Link from "next/link"
 import { motion } from "framer-motion"
+import type { Variants } from "framer-motion"
 
-const footerContainer = {
+const footerContainer: Variants = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
@@ -13,7 +14,7 @@ const footerContainer = {
   },
 }
 
-const footerItem = {
+const footerItem: Variants = {
   hidden: { opacity: 0, y: 24 },
   show: {
     opacity: 1,

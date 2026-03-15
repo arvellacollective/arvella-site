@@ -1,18 +1,9 @@
 import Navbar from "@/components/Navbar"
 import Footer from "@/components/Footer"
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "Arvella Collective",
@@ -27,9 +18,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
+        className={`${GeistSans.variable} ${GeistMono.variable} antialiased flex flex-col min-h-screen`}
       >
-
         <Navbar />
 
         <main className="flex-1">
@@ -37,7 +27,6 @@ export default function RootLayout({
         </main>
 
         <Footer />
-
       </body>
     </html>
   );
