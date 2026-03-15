@@ -1,0 +1,116 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------ */
+/* GLOBAL RESET */
+/* ------------------------------------------------ */
+
+html,
+body{
+  padding:0;
+  margin:0;
+  font-family: system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+img{
+  max-width:100%;
+  height:auto;
+  display:block;
+}
+
+a{
+  text-decoration:none;
+  color:inherit;
+}
+
+
+/* ------------------------------------------------ */
+/* LAYOUT HELPERS */
+/* ------------------------------------------------ */
+
+.container{
+  max-width:1440px;
+  margin:auto;
+  padding-left:2rem;
+  padding-right:2rem;
+}
+
+
+/* ------------------------------------------------ */
+/* PRODUCT GALLERY */
+/* ------------------------------------------------ */
+
+.product-gallery{
+  display:grid;
+  grid-template-columns:120px 1fr;
+  gap:24px;
+  width:100%;
+}
+
+.thumbnail-column{
+  display:grid;
+  gap:10px;
+  height:720px;
+}
+
+.thumbnail{
+  position:relative;
+  overflow:hidden;
+  border-radius:6px;
+  border:1px solid #e5e5e5;
+  cursor:pointer;
+  transition:all .25s ease;
+}
+
+.thumbnail:hover{
+  border-color:#111;
+}
+
+.main-image{
+  position:relative;
+  width:100%;
+  height:720px;
+  overflow:hidden;
+  border-radius:8px;
+  cursor:zoom-in;
+}
+
+
+/* ------------------------------------------------ */
+/* ANIMATIONS */
+/* ------------------------------------------------ */
+
+@keyframes slideLeft {
+  0% { transform: translateX(120px); opacity:0 }
+  100% { transform: translateX(0); opacity:1 }
+}
+
+@keyframes slideRight {
+  0% { transform: translateX(-120px); opacity:0 }
+  100% { transform: translateX(0); opacity:1 }
+}
+
+.animate-slide-left{
+  animation: slideLeft .35s ease;
+}
+
+.animate-slide-right{
+  animation: slideRight .35s ease;
+}
+
+@keyframes lightboxIn{
+  0% {opacity:0; transform:scale(.94)}
+  100% {opacity:1; transform:scale(1)}
+}
+
+.animate-lightbox-in{
+  animation: lightboxIn .35s ease forwards;
+}
+
+::selection {
+  background: transparent;
+}

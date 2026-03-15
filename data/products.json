@@ -1,0 +1,101 @@
+[
+  {
+    "source": "manual",
+    "product": {
+      "id": "1",
+      "slug": "arvella-signature-hoodie",
+      "title": "Arvella Signature Hoodie",
+      "price": "$59",
+      "image": "https://picsum.photos/900/1200?random=1",
+      "gallery": [
+        "https://picsum.photos/id/1015/900/1200",
+        "https://picsum.photos/id/1016/900/1200",
+        "https://picsum.photos/id/1018/900/1200"
+      ],
+      "url": "https://www.etsy.com",
+      "description": "Premium heavyweight hoodie designed for comfort and everyday wear.",
+      "shipping": "Free US shipping",
+      "status": "active"
+    }
+  },
+
+  {
+    "source": "manual",
+    "product": {
+      "id": "2",
+      "slug": "energy-hoodie",
+      "title": "Energy Hoodie",
+      "price": "$62",
+      "image": "https://picsum.photos/900/1200?random=2",
+      "gallery": [
+        "https://picsum.photos/id/1025/900/1200",
+        "https://picsum.photos/id/1026/900/1200",
+        "https://picsum.photos/id/1027/900/1200"
+      ],
+      "url": "https://www.etsy.com",
+      "description": "Soft cotton fleece hoodie designed for daily energy and comfort.",
+      "shipping": "Free US shipping",
+      "status": "active"
+    }
+  },
+
+  {
+    "source": "manual",
+    "product": {
+      "id": "3",
+      "slug": "frequency-hoodie",
+      "title": "High Frequency Hoodie",
+      "price": "$64",
+      "image": "https://picsum.photos/900/1200?random=3",
+      "gallery": [
+        "https://picsum.photos/id/1035/900/1200",
+        "https://picsum.photos/id/1036/900/1200",
+        "https://picsum.photos/id/1037/900/1200"
+      ],
+      "url": "https://www.etsy.com",
+      "description": "Minimal premium hoodie inspired by high frequency living.",
+      "shipping": "Free US shipping",
+      "status": "active"
+    }
+  },
+
+  {
+    "source": "manual",
+    "product": {
+      "id": "4",
+      "slug": "flower-hoodie",
+      "title": "Flower Energy Hoodie",
+      "price": "$63",
+      "image": "https://picsum.photos/900/1200?random=4",
+      "gallery": [
+        "https://picsum.photos/id/1045/900/1200",
+        "https://picsum.photos/id/1046/900/1200",
+        "https://picsum.photos/id/1047/900/1200"
+      ],
+      "url": "https://www.etsy.com",
+      "description": "Premium hoodie featuring floral inspired design elements.",
+      "shipping": "Free US shipping",
+      "status": "active"
+    }
+  },
+
+  {
+    "source": "manual",
+    "product": {
+      "id": "5",
+      "slug": "essential-hoodie",
+      "title": "Arvella Essential Hoodie",
+      "price": "$60",
+      "image": "https://picsum.photos/900/1200?random=5",
+      "gallery": [
+        "https://picsum.photos/id/1055/900/1200",
+        "https://picsum.photos/id/1056/900/1200",
+        "https://picsum.photos/id/1057/900/1200"
+      ],
+      "url": "https://www.etsy.com",
+      "description": "Essential heavyweight hoodie built for everyday wear.",
+      "shipping": "Free US shipping",
+      "status": "active"
+    }
+  }
+]
