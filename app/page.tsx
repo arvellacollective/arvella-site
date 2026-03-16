@@ -81,22 +81,16 @@ export default function Page() {
 
         <AnimatePresence mode="wait">
           <motion.div
-            key={currentHero}
-            initial={{ opacity: 0, x: 700 }}
-            animate={heroReady ? { opacity: 1, x: 0 } : { opacity: 0 }}
-            exit={{ opacity: 0, x: -120 }}
-            transition={{
-  opacity: {
-    duration: 2,
+  key={currentHero}
+  initial={{ opacity: 0, scale: 1.08 }}
+  animate={heroReady ? { opacity: 1, scale: 1 } : { opacity: 0 }}
+  exit={{ opacity: 0 }}
+  transition={{
+    duration: 0.6,
     ease: [0.4, 0, 0.2, 1],
-  },
-  scale: {
-    duration: 8,
-    ease: "linear",
-  },
-}}
-            className="absolute inset-0"
-          >
+  }}
+  className="absolute inset-0"
+>
 
             <Image
               src={heroes[currentHero]}
@@ -211,11 +205,11 @@ export default function Page() {
             </h2>
 
             <Link
-              href="/shop"
-              className="text-sm tracking-widest text-white/90 transition hover:text-white"
-            >
-              VIEW ALL
-            </Link>
+  href="/shop"
+  className="text-sm tracking-widest !text-white/60 transition hover:!text-white"
+>
+  VIEW ALL
+</Link>
 
           </div>
 
