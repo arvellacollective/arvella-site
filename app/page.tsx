@@ -93,15 +93,14 @@ export default function Page() {
 >
 
             <Image
-              src={heroes[currentHero]}
-              alt="Arvella Collection"
-              fill
-              priority
-              quality={100}
-              unoptimized
-              sizes="100vw"
-              className="object-cover object-[15%_20%] md:object-[30%_45%]"
-            />
+  src={heroes[currentHero]}
+  alt="Arvella Collection"
+  fill
+  priority
+  quality={90}
+  sizes="100vw"
+  className="object-cover object-[15%_20%] md:object-[30%_45%]"
+/>
 
           </motion.div>
         </AnimatePresence>
