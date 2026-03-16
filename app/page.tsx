@@ -18,9 +18,9 @@ export default function Page() {
   const [scrollLocked, setScrollLocked] = useState(false)
 
   const heroes = [
-    "/hero-arvella-4k.jpg",
-    "/hero-arvella-4k-2.jpg",
-    "/hero-arvella-4k-3.jpg",
+    "/hero-arvella-4k.webp",
+    "/hero-arvella-4k-2.webp",
+    "/hero-arvella-4k-3.webp",
   ]
 
   const { scrollY } = useScroll()
