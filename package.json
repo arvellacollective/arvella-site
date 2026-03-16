@@ -2,13 +2,6 @@
   "name": "arvella-site",
   "version": "0.1.0",
   "private": true,
-  "engines": {
-  "node": "18.x"
-},
-{
-  "name": "arvella-site",
-  "version": "0.1.0",
-  "private": true,
 
   "engines": {
     "node": "24.x"
@@ -17,15 +10,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
-  }
-}
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
     "start": "next start",
     "lint": "eslint"
   },
+
   "dependencies": {
     "framer-motion": "^12.36.0",
     "geist": "^1.7.0",
@@ -33,6 +21,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
+
   "devDependencies": {
     "@tailwindcss/cli": "^4.2.1",
     "@tailwindcss/postcss": "^4.2.1",
