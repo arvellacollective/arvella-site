@@ -34,11 +34,11 @@ export async function POST(request: Request) {
 
     const resend = new Resend(apiKey)
 
-    // ✅ USER MAIL (only)
-    const { data, error } = await resend.emails.send({
+    // 1️⃣ USER MAIL
+    await resend.emails.send({
       from: "Arvella <info@arvellacollective.com>",
       to: email,
-      subject: "Welcome to Arvella",
+      subject: "You're in — Arvella",
       html: `
       <div style="background:#f4f2ef;padding:60px 20px;font-family:Helvetica,Arial,sans-serif;">
         <div style="max-width:520px;margin:0 auto;text-align:center;color:#1a1a1a;">
@@ -80,15 +80,13 @@ export async function POST(request: Request) {
       `,
     })
 
-    if (error) {
-      console.error("RESEND ERROR:", error)
-      return NextResponse.json(
-        { error: "Email send failed" },
-        { status: 500 }
-      )
-    }
-
-    console.log("EMAIL SENT:", data?.id)
+    // 2️⃣ ADMIN NOTIFICATION (SANA)
+    await resend.emails.send({
+      from: "Arvella <info@arvellacollective.com>",
+      to: "arvellacollective@gmail.com",
+      subject: "New Subscriber",
+      text: `New subscriber: ${email}`,
+    })
 
     return NextResponse.json({ success: true })
 
