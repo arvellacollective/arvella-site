@@ -3,8 +3,6 @@ import { Resend } from "resend"
 
 export const runtime = "nodejs"
 
-const resend = new Resend(process.env.RESEND_API_KEY!)
-
 export async function POST(request: Request) {
   try {
     const body = await request.json().catch(() => null)
@@ -24,6 +22,9 @@ export async function POST(request: Request) {
         { status: 400 }
       )
     }
+
+    // 🔥 CRITICAL FIX → burada oluştur
+    const resend = new Resend(process.env.RESEND_API_KEY!)
 
     // ADMIN MAIL
     await resend.emails.send({
