@@ -31,6 +31,8 @@ export default function Footer() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (success) return
+
     setLoading(true)
 
     try {
@@ -44,12 +46,22 @@ export default function Footer() {
 
       const data = await res.json()
 
+      console.log("API RESPONSE:", data)
+
+      // ❌ API error
+      if (!res.ok) {
+        console.error("API ERROR:", data.error)
+        return
+      }
+
+      // ✅ success
       if (data.success) {
         setSuccess(true)
         setEmail("")
       }
+
     } catch (err) {
-      console.error(err)
+      console.error("FETCH ERROR:", err)
     } finally {
       setLoading(false)
     }
@@ -83,24 +95,25 @@ export default function Footer() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            disabled={success}
             placeholder="Email address"
             autoComplete="off"
-            className="w-[340px] border-b border-neutral-300 bg-transparent pb-2 text-sm outline-none placeholder:text-neutral-400 transition focus:border-neutral-700"
+            className="w-[340px] border-b border-neutral-300 bg-transparent pb-2 text-sm outline-none placeholder:text-neutral-400 transition focus:border-neutral-700 disabled:opacity-50"
           />
 
           <button
             type="submit"
-            disabled={loading}
-            className="border border-neutral-800 px-7 py-2 text-sm tracking-[0.2em] transition duration-300 hover:bg-neutral-900 hover:text-white"
+            disabled={loading || success}
+            className="border border-neutral-800 px-7 py-2 text-sm tracking-[0.2em] transition duration-300 hover:bg-neutral-900 hover:text-white disabled:opacity-50"
           >
-            {loading ? "..." : "SEND"}
+            {loading ? "..." : success ? "DONE" : "SEND"}
           </button>
 
         </form>
 
         {success && (
-          <p className="mt-6 text-sm text-green-600">
-            You're on the list.
+          <p className="mt-6 text-sm text-green-600 tracking-wide">
+            You're now inside the frequency.
           </p>
         )}
 

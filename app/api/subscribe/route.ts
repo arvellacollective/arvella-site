@@ -23,29 +23,72 @@ export async function POST(request: Request) {
       )
     }
 
-    // 🔥 SAFE ENV CHECK
     const apiKey = process.env.RESEND_API_KEY
     if (!apiKey) {
-      throw new Error("RESEND_API_KEY is missing")
+      console.error("ENV ERROR: Missing RESEND_API_KEY")
+      return NextResponse.json(
+        { error: "Server config error" },
+        { status: 500 }
+      )
     }
 
     const resend = new Resend(apiKey)
 
-    // ADMIN MAIL
-    await resend.emails.send({
-      from: "Arvella <info@arvellacollective.com>",
-      to: "arvellacollective@gmail.com",
-      subject: "New Subscriber",
-      html: `<p>${email}</p>`,
-    })
-
-    // USER MAIL
-    await resend.emails.send({
+    // ✅ USER MAIL (only)
+    const { data, error } = await resend.emails.send({
       from: "Arvella <info@arvellacollective.com>",
       to: email,
       subject: "Welcome to Arvella",
-      html: `<h2>Welcome</h2><p>You are on the list.</p>`,
+      html: `
+      <div style="background:#f4f2ef;padding:60px 20px;font-family:Helvetica,Arial,sans-serif;">
+        <div style="max-width:520px;margin:0 auto;text-align:center;color:#1a1a1a;">
+          
+          <h1 style="letter-spacing:0.4em;font-size:14px;margin-bottom:40px;">
+            ARVELLA
+          </h1>
+
+          <h2 style="font-size:22px;font-weight:500;margin-bottom:20px;">
+            You’re now inside the frequency.
+          </h2>
+
+          <p style="font-size:14px;line-height:1.6;color:#666;margin-bottom:40px;">
+            This is not just a list.<br/>
+            This is a different level of presence.
+          </p>
+
+          <a href="https://arvellacollective.com/shop"
+            style="
+              display:inline-block;
+              padding:12px 28px;
+              border:1px solid #1a1a1a;
+              text-decoration:none;
+              color:#1a1a1a;
+              font-size:12px;
+              letter-spacing:0.2em;
+            "
+          >
+            ENTER SHOP
+          </a>
+
+          <p style="margin-top:50px;font-size:11px;color:#999;">
+            Arvella Collective<br/>
+            Minimal frequency-driven apparel
+          </p>
+
+        </div>
+      </div>
+      `,
     })
+
+    if (error) {
+      console.error("RESEND ERROR:", error)
+      return NextResponse.json(
+        { error: "Email send failed" },
+        { status: 500 }
+      )
+    }
+
+    console.log("EMAIL SENT:", data?.id)
 
     return NextResponse.json({ success: true })
 
