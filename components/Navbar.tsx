@@ -43,7 +43,7 @@ export default function Navbar() {
             <div className="flex-1" />
 
             {/* LOGO (TRUE CENTER) */}
-            <div className="absolute left-1/2 -translate-x-1/2">
+            <div className="absolute left-1/2 -translate-x-1/2 md:left-1/2 md:-translate-x-1/2 left-6 translate-x-0">
               <Link
                 href="/"
                 className="text-[15px] md:text-[16px] tracking-[0.38em] font-medium text-neutral-900 hover:opacity-70 transition"
