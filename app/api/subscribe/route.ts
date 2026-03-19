@@ -1,16 +1,24 @@
 import { NextResponse } from "next/server"
 import { Resend } from "resend"
 
-// 🔥 KRİTİK FIX
 export const runtime = "nodejs"
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+const resend = new Resend(process.env.RESEND_API_KEY!)
 
-export async function POST(req: Request) {
+export async function POST(request: Request) {
   try {
-    const { email } = await req.json()
+    const body = await request.json().catch(() => null)
 
-    if (!email || !email.includes("@")) {
+    if (!body || !body.email) {
+      return NextResponse.json(
+        { error: "Email is required" },
+        { status: 400 }
+      )
+    }
+
+    const email = body.email as string
+
+    if (!email.includes("@")) {
       return NextResponse.json(
         { error: "Invalid email" },
         { status: 400 }
@@ -22,7 +30,7 @@ export async function POST(req: Request) {
       from: "Arvella <info@arvellacollective.com>",
       to: "arvellacollective@gmail.com",
       subject: "New Subscriber",
-      html: `<p>New subscriber: ${email}</p>`,
+      html: `<p>${email}</p>`,
     })
 
     // USER MAIL
@@ -30,19 +38,16 @@ export async function POST(req: Request) {
       from: "Arvella <info@arvellacollective.com>",
       to: email,
       subject: "Welcome to Arvella",
-      html: `
-        <h2>Welcome to Arvella</h2>
-        <p>You are now on the list.</p>
-      `,
+      html: `<h2>Welcome</h2><p>You are on the list.</p>`,
     })
 
     return NextResponse.json({ success: true })
 
-  } catch (error) {
-    console.error("ERROR:", error)
+  } catch (err) {
+    console.error("API ERROR:", err)
 
     return NextResponse.json(
-      { error: "Server error" },
+      { error: "Internal Server Error" },
       { status: 500 }
     )
   }
