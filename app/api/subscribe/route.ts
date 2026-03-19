@@ -1,35 +1,49 @@
-import { NextResponse } from "next/server";
-import { Resend } from "resend";
+import { NextResponse } from "next/server"
+import { Resend } from "resend"
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// 🔥 KRİTİK FIX
+export const runtime = "nodejs"
+
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function POST(req: Request) {
   try {
-    const { email } = await req.json();
+    const { email } = await req.json()
 
     if (!email || !email.includes("@")) {
-      return NextResponse.json({ error: "Invalid email" }, { status: 400 });
+      return NextResponse.json(
+        { error: "Invalid email" },
+        { status: 400 }
+      )
     }
 
-    // sana mail
+    // ADMIN MAIL
     await resend.emails.send({
       from: "Arvella <info@arvellacollective.com>",
       to: "arvellacollective@gmail.com",
       subject: "New Subscriber",
-      text: `New subscriber: ${email}`,
-    });
+      html: `<p>New subscriber: ${email}</p>`,
+    })
 
-    // kullanıcıya mail
+    // USER MAIL
     await resend.emails.send({
       from: "Arvella <info@arvellacollective.com>",
       to: email,
       subject: "Welcome to Arvella",
-      html: `<h2>Welcome</h2><p>You are on the list.</p>`,
-    });
+      html: `
+        <h2>Welcome to Arvella</h2>
+        <p>You are now on the list.</p>
+      `,
+    })
 
-    return NextResponse.json({ status: "success" });
+    return NextResponse.json({ success: true })
 
   } catch (error) {
-    return NextResponse.json({ error: "Server error" }, { status: 500 });
+    console.error("ERROR:", error)
+
+    return NextResponse.json(
+      { error: "Server error" },
+      { status: 500 }
+    )
   }
 }
