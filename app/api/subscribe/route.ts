@@ -23,8 +23,13 @@ export async function POST(request: Request) {
       )
     }
 
-    // 🔥 CRITICAL FIX → burada oluştur
-    const resend = new Resend(process.env.RESEND_API_KEY!)
+    // 🔥 SAFE ENV CHECK
+    const apiKey = process.env.RESEND_API_KEY
+    if (!apiKey) {
+      throw new Error("RESEND_API_KEY is missing")
+    }
+
+    const resend = new Resend(apiKey)
 
     // ADMIN MAIL
     await resend.emails.send({
