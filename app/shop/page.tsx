@@ -5,6 +5,16 @@ import Reveal from "@/components/Reveal"
 export default async function ShopPage() {
   const products = await getAllProducts()
 
+  const chunkProducts = (arr: any[], size: number) => {
+    const result = []
+    for (let i = 0; i < arr.length; i += size) {
+      result.push(arr.slice(i, i + size))
+    }
+    return result
+  }
+
+  const blocks = chunkProducts(products.filter(Boolean), 5)
+
   return (
     <main className="bg-white">
 
@@ -13,7 +23,6 @@ export default async function ShopPage() {
         max-w-[1400px]
         mx-auto
         px-6 md:px-8
-
         pt-28 md:pt-36
         pb-16 md:pb-20
       ">
@@ -46,43 +55,64 @@ export default async function ShopPage() {
 
       </div>
 
-      {/* GRID */}
-      <div className="max-w-[1400px] mx-auto px-6 md:px-8 pb-28 md:pb-32">
+      {/* BLOCK SYSTEM */}
+      <div className="max-w-[1400px] mx-auto px-6 md:px-8 pb-28 md:pb-32 space-y-24 md:space-y-32">
 
-        <div
-          className="
-            grid
-            group/list
-            grid-cols-2
-            md:grid-cols-3
-            lg:grid-cols-4
-            gap-x-5
-            md:gap-x-10
-            gap-y-20
-            md:gap-y-24
-          "
-        >
-          {products.filter(Boolean).map((product, index) => (
+        {blocks.map((block, blockIndex) => {
+          const isReverse = blockIndex % 2 === 1
+
+          const hero = block[0]
+          const smalls = block.slice(1)
+
+          return (
             <div
-              key={product.id}
-              className={`
-                transition-all duration-300
-
-                md:group-hover/list:opacity-80
-                md:hover:!opacity-100
-
-                ${index === 0 ? "col-span-2 md:col-span-2 md:row-span-2" : ""}
-                ${index === 1 ? "md:translate-y-4" : ""}
-                ${index === 2 ? "md:translate-y-8" : ""}
-                ${index === 4 ? "md:translate-y-6" : ""}
-              `}
+              key={blockIndex}
+              className="
+                grid
+                grid-cols-1
+                md:grid-cols-2
+                gap-6 md:gap-10
+                items-stretch
+              "
             >
-              <Reveal>
-                <ProductCard product={product} />
-              </Reveal>
+
+              {/* HERO LEFT */}
+              {!isReverse && hero && (
+                <div className="h-full">
+                  <Reveal>
+                    <ProductCard product={hero} variant="hero" />
+                  </Reveal>
+                </div>
+              )}
+
+              {/* SMALL GRID */}
+              <div className="
+                grid
+                grid-cols-2
+                gap-6 md:gap-10
+                h-full
+              ">
+                {smalls.map((product: any) => (
+                  <div key={product.id}>
+                    <Reveal>
+                      <ProductCard product={product} />
+                    </Reveal>
+                  </div>
+                ))}
+              </div>
+
+              {/* HERO RIGHT */}
+              {isReverse && hero && (
+                <div className="h-full">
+                  <Reveal>
+                    <ProductCard product={hero} variant="hero" />
+                  </Reveal>
+                </div>
+              )}
+
             </div>
-          ))}
-        </div>
+          )
+        })}
 
       </div>
 

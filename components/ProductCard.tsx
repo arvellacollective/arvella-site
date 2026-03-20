@@ -19,9 +19,17 @@ type Product = {
 
 const TRANSITION_KEY = "arvella_transition"
 
-export default function ProductCard({ product }: { product: Product }) {
+export default function ProductCard({
+  product,
+  variant = "default"
+}: {
+  product: Product
+  variant?: "default" | "hero"
+}) {
   const imageRef = useRef<HTMLDivElement>(null)
   const mainImgRef = useRef<HTMLImageElement | null>(null)
+
+  const isHero = variant === "hero"
 
   const handleClick = () => {
     if (!imageRef.current || !product) return
@@ -47,8 +55,8 @@ export default function ProductCard({ product }: { product: Product }) {
       : product?.images?.length
       ? product.images
       : product?.image2
-        ? [product.image, product.image2]
-        : [product.image || "/placeholder.png"]
+      ? [product.image, product.image2]
+      : [product.image || "/placeholder.png"]
 
   const mainImage = galleryImages[0]
   const hoverImage = galleryImages[1] || null
@@ -59,12 +67,11 @@ export default function ProductCard({ product }: { product: Product }) {
       className="group block w-full"
       onClick={handleClick}
     >
-      {/* WRAPPER (relative şart) */}
       <div className="relative">
 
-        {/* TILT ONLY IMAGE */}
+        {/* IMAGE WRAPPER */}
         <div
-		data-tilt
+          data-tilt
           onMouseMove={(e) => {
             const rect = e.currentTarget.getBoundingClientRect()
 
@@ -87,13 +94,13 @@ export default function ProductCard({ product }: { product: Product }) {
               perspective(1000px)
               rotateX(${rotateX}deg)
               rotateY(${rotateY}deg)
-              scale(1.015)
+              scale(${isHero ? 1.02 : 1.015})
               translateY(-2px)
             `
 
             e.currentTarget.style.boxShadow = `
-              ${-shadowX}px ${12 + shadowY}px 32px rgba(0,0,0,0.16),
-              0 18px 40px rgba(0,0,0,0.10)
+              ${-shadowX}px ${12 + shadowY}px ${isHero ? "40px" : "32px"} rgba(0,0,0,0.16),
+              0 18px ${isHero ? "48px" : "40px"} rgba(0,0,0,0.10)
             `
           }}
           onMouseLeave={(e) => {
@@ -120,20 +127,26 @@ export default function ProductCard({ product }: { product: Product }) {
           {/* IMAGE */}
           <div
             ref={imageRef}
-            className="
+            className={`
               relative
               w-full
-              aspect-[4/5]
               overflow-hidden
               bg-neutral-100
-            "
+              ${isHero ? "aspect-[4/5]" : "aspect-[4/5]"}
+            `}
           >
             <Image
               ref={mainImgRef}
               src={mainImage}
               alt={product?.title || "Product"}
               fill
-              className="object-cover transition-transform duration-300 ease-out"
+              className={`
+                object-cover
+                transition-transform
+                duration-300
+                ease-out
+                ${isHero ? "group-hover:scale-[1.05]" : "group-hover:scale-[1.03]"}
+              `}
             />
 
             {hoverImage && (
@@ -145,75 +158,61 @@ export default function ProductCard({ product }: { product: Product }) {
               />
             )}
 
-            {/* GRADIENT ONLY */}
-            <div className="
+            {/* GRADIENT */}
+            <div className={`
               pointer-events-none
               absolute
               inset-0
               bg-gradient-to-t
-              from-black/30
-              via-black/10
+              ${isHero ? "from-black/40 via-black/10" : "from-black/30 via-black/10"}
               to-transparent
-              opacity-70
+              opacity-80
               transition-opacity
               duration-500
-              group-hover:opacity-90
-            " />
+              group-hover:opacity-95
+            `} />
           </div>
         </div>
 
-        {/* TEXT - SEPARATE LAYER (CRITICAL FIX) */}
+        {/* TEXT */}
         <div
-  className="
-    pointer-events-none
-    absolute
-    inset-x-0
-    bottom-0
-    pb-6
-    text-center
-    transition-transform
-    duration-300
-    ease-out
-  "
-  ref={(el) => {
-    if (!el) return
-
-    const parent = el.parentElement?.querySelector('[data-tilt]')
-    if (!parent) return
-
-    parent.addEventListener("mousemove", (e: any) => {
-      const rect = parent.getBoundingClientRect()
-
-      const x = e.clientX - rect.left
-      const y = e.clientY - rect.top
-
-      const centerX = rect.width / 2
-      const centerY = rect.height / 2
-
-      const moveX = (x - centerX) / 40
-      const moveY = (y - centerY) / 40
-
-      el.style.transform = `translate(${moveX}px, ${moveY}px)`
-    })
-
-    parent.addEventListener("mouseleave", () => {
-      el.style.transform = "translate(0,0)"
-    })
-  }}
->
+          className="
+            pointer-events-none
+            absolute
+            inset-x-0
+            bottom-0
+            pb-6
+            text-center
+            transition-transform
+            duration-300
+            ease-out
+          "
+        >
           <div
-            className="space-y-1.5"
+            className={`
+              ${isHero ? "space-y-2" : "space-y-1.5"}
+            `}
             style={{
               WebkitFontSmoothing: "antialiased",
               MozOsxFontSmoothing: "grayscale"
             }}
           >
-            <h3 className="text-[15.5px] tracking-[0.12em] text-white font-medium">
+            <h3 className={`
+              text-white
+              font-medium
+              tracking-[0.12em]
+              ${isHero ? "text-[18px]" : "text-[15.5px]"}
+            `}>
               {product?.title || "Product"}
             </h3>
 
             <div>
-              <span className="text-[21px] text-white font-semibold tracking-[0.02em] [text-shadow:0_0_1px_rgba(0,0,0,0.2)]">
+              <span className={`
+                text-white
+                font-semibold
+                tracking-[0.02em]
+                ${isHero ? "text-[24px]" : "text-[21px]"}
+              `}>
                 {product?.price || ""}
               </span>
             </div>
@@ -221,18 +220,18 @@ export default function ProductCard({ product }: { product: Product }) {
             {product?.shipping && (
               <div className="pt-1">
                 <span className="
-  inline-block
-  mt-1
-  px-3
-  py-[4px]
-  text-[10px]
-  tracking-[0.14em]
-  uppercase
-  text-[#5FAF92]
-  bg-[#EAF7F1]/80
-  backdrop-blur-sm
-  rounded-full
-">
+                  inline-block
+                  mt-1
+                  px-3
+                  py-[4px]
+                  text-[10px]
+                  tracking-[0.14em]
+                  uppercase
+                  text-[#5FAF92]
+                  bg-[#EAF7F1]/80
+                  backdrop-blur-sm
+                  rounded-full
+                ">
                   {product.shipping}
                 </span>
               </div>

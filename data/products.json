@@ -8,9 +8,12 @@
       "price": "$59",
       "image": "https://picsum.photos/900/1200?random=1",
       "gallery": [
-        "https://picsum.photos/id/1015/900/1200",
-        "https://picsum.photos/id/1016/900/1200",
-        "https://picsum.photos/id/1018/900/1200"
+        "https://picsum.photos/900/1200?random=11",
+        "https://picsum.photos/900/1200?random=12",
+        "https://picsum.photos/900/1200?random=13",
+        "https://picsum.photos/900/1200?random=14",
+        "https://picsum.photos/900/1200?random=15",
+        "https://picsum.photos/900/1200?random=16"
       ],
       "url": "https://www.etsy.com",
       "description": "Premium heavyweight hoodie designed for comfort and everyday wear.",
@@ -28,9 +31,11 @@
       "price": "$62",
       "image": "https://picsum.photos/900/1200?random=2",
       "gallery": [
-        "https://picsum.photos/id/1025/900/1200",
-        "https://picsum.photos/id/1026/900/1200",
-        "https://picsum.photos/id/1027/900/1200"
+        "https://picsum.photos/900/1200?random=21",
+        "https://picsum.photos/900/1200?random=22",
+        "https://picsum.photos/900/1200?random=23",
+        "https://picsum.photos/900/1200?random=24",
+        "https://picsum.photos/900/1200?random=25"
       ],
       "url": "https://www.etsy.com",
       "description": "Soft cotton fleece hoodie designed for daily energy and comfort.",
@@ -48,9 +53,13 @@
       "price": "$64",
       "image": "https://picsum.photos/900/1200?random=3",
       "gallery": [
-        "https://picsum.photos/id/1035/900/1200",
-        "https://picsum.photos/id/1036/900/1200",
-        "https://picsum.photos/id/1037/900/1200"
+        "https://picsum.photos/900/1200?random=31",
+        "https://picsum.photos/900/1200?random=32",
+        "https://picsum.photos/900/1200?random=33",
+        "https://picsum.photos/900/1200?random=34",
+        "https://picsum.photos/900/1200?random=35",
+        "https://picsum.photos/900/1200?random=36",
+        "https://picsum.photos/900/1200?random=37"
       ],
       "url": "https://www.etsy.com",
       "description": "Minimal premium hoodie inspired by high frequency living.",
@@ -68,9 +77,14 @@
       "price": "$63",
       "image": "https://picsum.photos/900/1200?random=4",
       "gallery": [
-        "https://picsum.photos/id/1045/900/1200",
-        "https://picsum.photos/id/1046/900/1200",
-        "https://picsum.photos/id/1047/900/1200"
+        "https://picsum.photos/900/1200?random=41",
+        "https://picsum.photos/900/1200?random=42",
+        "https://picsum.photos/900/1200?random=43",
+        "https://picsum.photos/900/1200?random=44",
+        "https://picsum.photos/900/1200?random=45",
+        "https://picsum.photos/900/1200?random=46",
+        "https://picsum.photos/900/1200?random=47",
+        "https://picsum.photos/900/1200?random=48"
       ],
       "url": "https://www.etsy.com",
       "description": "Premium hoodie featuring floral inspired design elements.",
@@ -88,12 +102,140 @@
       "price": "$60",
       "image": "https://picsum.photos/900/1200?random=5",
       "gallery": [
-        "https://picsum.photos/id/1055/900/1200",
-        "https://picsum.photos/id/1056/900/1200",
-        "https://picsum.photos/id/1057/900/1200"
+        "https://picsum.photos/900/1200?random=51",
+        "https://picsum.photos/900/1200?random=52",
+        "https://picsum.photos/900/1200?random=53",
+        "https://picsum.photos/900/1200?random=54",
+        "https://picsum.photos/900/1200?random=55",
+        "https://picsum.photos/900/1200?random=56",
+        "https://picsum.photos/900/1200?random=57",
+        "https://picsum.photos/900/1200?random=58",
+        "https://picsum.photos/900/1200?random=59"
       ],
       "url": "https://www.etsy.com",
       "description": "Essential heavyweight hoodie built for everyday wear.",
+      "shipping": "Free US shipping",
+      "status": "active"
+    }
+  },
+
+  {
+    "source": "manual",
+    "product": {
+      "id": "6",
+      "slug": "minimal-light-hoodie",
+      "title": "Minimal Light Hoodie",
+      "price": "$58",
+      "image": "https://picsum.photos/900/1200?random=6",
+      "gallery": [
+        "https://picsum.photos/900/1200?random=61",
+        "https://picsum.photos/900/1200?random=62",
+        "https://picsum.photos/900/1200?random=63",
+        "https://picsum.photos/900/1200?random=64",
+        "https://picsum.photos/900/1200?random=65"
+      ],
+      "url": "https://www.etsy.com",
+      "description": "Clean minimal hoodie with soft light tones.",
+      "shipping": "Free US shipping",
+      "status": "active"
+    }
+  },
+
+  {
+    "source": "manual",
+    "product": {
+      "id": "7",
+      "slug": "dark-core-hoodie",
+      "title": "Dark Core Hoodie",
+      "price": "$66",
+      "image": "https://picsum.photos/900/1200?random=7",
+      "gallery": [
+        "https://picsum.photos/900/1200?random=71",
+        "https://picsum.photos/900/1200?random=72",
+        "https://picsum.photos/900/1200?random=73",
+        "https://picsum.photos/900/1200?random=74",
+        "https://picsum.photos/900/1200?random=75",
+        "https://picsum.photos/900/1200?random=76",
+        "https://picsum.photos/900/1200?random=77"
+      ],
+      "url": "https://www.etsy.com",
+      "description": "Deep dark aesthetic hoodie with strong presence.",
+      "shipping": "Free US shipping",
+      "status": "active"
+    }
+  },
+
+  {
+    "source": "manual",
+    "product": {
+      "id": "8",
+      "slug": "nature-flow-hoodie",
+      "title": "Nature Flow Hoodie",
+      "price": "$61",
+      "image": "https://picsum.photos/900/1200?random=8",
+      "gallery": [
+        "https://picsum.photos/900/1200?random=81",
+        "https://picsum.photos/900/1200?random=82",
+        "https://picsum.photos/900/1200?random=83",
+        "https://picsum.photos/900/1200?random=84",
+        "https://picsum.photos/900/1200?random=85",
+        "https://picsum.photos/900/1200?random=86",
+        "https://picsum.photos/900/1200?random=87",
+        "https://picsum.photos/900/1200?random=88",
+        "https://picsum.photos/900/1200?random=89"
+      ],
+      "url": "https://www.etsy.com",
+      "description": "Organic flow inspired hoodie with natural tones.",
+      "shipping": "Free US shipping",
+      "status": "active"
+    }
+  },
+
+  {
+    "source": "manual",
+    "product": {
+      "id": "9",
+      "slug": "soft-neutral-hoodie",
+      "title": "Soft Neutral Hoodie",
+      "price": "$59",
+      "image": "https://picsum.photos/900/1200?random=9",
+      "gallery": [
+        "https://picsum.photos/900/1200?random=91",
+        "https://picsum.photos/900/1200?random=92",
+        "https://picsum.photos/900/1200?random=93",
+        "https://picsum.photos/900/1200?random=94",
+        "https://picsum.photos/900/1200?random=95",
+        "https://picsum.photos/900/1200?random=96"
+      ],
+      "url": "https://www.etsy.com",
+      "description": "Soft neutral hoodie designed for calm everyday wear.",
+      "shipping": "Free US shipping",
+      "status": "active"
+    }
+  },
+
+  {
+    "source": "manual",
+    "product": {
+      "id": "10",
+      "slug": "contrast-edge-hoodie",
+      "title": "Contrast Edge Hoodie",
+      "price": "$67",
+      "image": "https://picsum.photos/900/1200?random=10",
+      "gallery": [
+        "https://picsum.photos/900/1200?random=101",
+        "https://picsum.photos/900/1200?random=102",
+        "https://picsum.photos/900/1200?random=103",
+        "https://picsum.photos/900/1200?random=104",
+        "https://picsum.photos/900/1200?random=105",
+        "https://picsum.photos/900/1200?random=106",
+        "https://picsum.photos/900/1200?random=107",
+        "https://picsum.photos/900/1200?random=108",
+        "https://picsum.photos/900/1200?random=109",
+        "https://picsum.photos/900/1200?random=110"
+      ],
+      "url": "https://www.etsy.com",
+      "description": "High contrast statement hoodie with strong visual impact.",
       "shipping": "Free US shipping",
       "status": "active"
     }
