@@ -28,22 +28,21 @@ export default function Navbar() {
         transition-all duration-500 ease-out
         ${
           scrolled
-            ? "h-[64px] bg-white/95"
+            ? "h-[64px] bg-white/95 backdrop-blur-md"
             : "h-[76px] bg-transparent"
         }
         `}
-		
-
       >
-        <div className="max-w-[1440px] mx-auto h-full px-6 md:px-10 lg:px-16 xl:px-20">
-          
+        {/* ✅ GRID İLE %100 AYNI CONTAINER */}
+        <div className="max-w-[1400px] mx-auto h-full px-6 md:px-8">
+
           <div className="relative flex items-center h-full">
 
-            {/* LEFT (EMPTY FOR BALANCE) */}
+            {/* LEFT */}
             <div className="flex-1" />
 
-            {/* LOGO (TRUE CENTER) */}
-            <div className="absolute left-1/2 -translate-x-1/2 md:left-1/2 md:-translate-x-1/2 left-6 translate-x-0">
+            {/* LOGO */}
+            <div className="absolute left-1/2 -translate-x-1/2">
               <Link
                 href="/"
                 className="text-[15px] md:text-[16px] tracking-[0.38em] font-medium text-neutral-900 hover:opacity-70 transition"
@@ -69,7 +68,7 @@ export default function Navbar() {
                 JOURNAL
               </Link>
 
-              {/* SHOP (PREMIUM RECTANGLE) */}
+              {/* SHOP BUTTON */}
               <Link
                 href="/shop"
                 className="
@@ -82,7 +81,6 @@ text-neutral-900/90
 hover:border-black/40
 hover:text-neutral-900
 hover:bg-black/[0.04]
-
 
 transition-all duration-300 ease-out
 "
@@ -116,27 +114,15 @@ transition-all duration-300 ease-out
             ✕
           </button>
 
-          <Link
-            href="/"
-            onClick={() => setMenuOpen(false)}
-            className="hover:opacity-60 transition"
-          >
+          <Link href="/" onClick={() => setMenuOpen(false)} className="hover:opacity-60 transition">
             HOME
           </Link>
 
-          <Link
-            href="/about"
-            onClick={() => setMenuOpen(false)}
-            className="hover:opacity-60 transition"
-          >
+          <Link href="/about" onClick={() => setMenuOpen(false)} className="hover:opacity-60 transition">
             ABOUT
           </Link>
 
-          <Link
-            href="/journal"
-            onClick={() => setMenuOpen(false)}
-            className="hover:opacity-60 transition"
-          >
+          <Link href="/journal" onClick={() => setMenuOpen(false)} className="hover:opacity-60 transition">
             JOURNAL
           </Link>
 
