@@ -64,6 +64,7 @@ export default function ProductPage({ params }: Props) {
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="lg:sticky lg:top-24 self-start"
         >
+		
           <ProductGallery
             title={product.title}
             image={product.image}
