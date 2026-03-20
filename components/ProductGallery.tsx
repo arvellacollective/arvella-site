@@ -10,8 +10,6 @@ type Props = {
   gallery?: string[]
 }
 
-const TRANSITION_KEY = "arvella_transition"
-
 export default function ProductGallery({ title, image, gallery }: Props) {
   const images = [image, ...(gallery || [])].filter(
     (img) => typeof img === "string" && img.trim() !== ""
@@ -23,11 +21,7 @@ export default function ProductGallery({ title, image, gallery }: Props) {
   const [isOpen, setIsOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
 
-  // 🔥 NEW
-  const [transitionData, setTransitionData] = useState<any>(null)
-
   const imageRef = useRef<HTMLDivElement | null>(null)
-  const mainImageRef = useRef<HTMLDivElement | null>(null) // 🔥 NEW
   const lightboxImageRef = useRef<HTMLDivElement | null>(null)
   const transitionTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
@@ -66,47 +60,7 @@ export default function ProductGallery({ title, image, gallery }: Props) {
     }
   }, [isOpen])
 
-  // 🔥 TRANSITION INIT
-  useEffect(() => {
-    const raw = sessionStorage.getItem(TRANSITION_KEY)
-    if (!raw) return
-
-    const data = JSON.parse(raw)
-
-    const target = mainImageRef.current?.getBoundingClientRect()
-    if (!target) return
-
-    setTransitionData({
-      ...data,
-      targetX: target.left,
-      targetY: target.top,
-      targetW: target.width,
-      targetH: target.height,
-    })
-
-    sessionStorage.removeItem(TRANSITION_KEY)
-  }, [])
-
-  // 🔥 ANIMATION TRIGGER
-  useEffect(() => {
-    if (!transitionData) return
-
-    requestAnimationFrame(() => {
-      const el = document.getElementById("arvella-transition")
-      if (!el) return
-
-      el.style.transform = `
-        translate(${transitionData.targetX}px, ${transitionData.targetY}px)
-        scale(${transitionData.targetW / transitionData.width})
-      `
-    })
-
-    setTimeout(() => {
-      setTransitionData(null)
-    }, 650)
-  }, [transitionData])
-
-  // 🔥 MAIN ZOOM
+  // 🔥 MAIN ZOOM (güçlendirildi)
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (isOpen) return
 
@@ -130,7 +84,7 @@ export default function ProductGallery({ title, image, gallery }: Props) {
     el.style.transform = "scale(1)"
   }
 
-  // 🔥 LIGHTBOX
+  // 🔥 LIGHTBOX ZOOM (güçlendirildi)
   const handleLightboxMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const el = lightboxImageRef.current
     if (!el) return
@@ -167,31 +121,6 @@ export default function ProductGallery({ title, image, gallery }: Props) {
 
   return (
     <>
-      {/* 🔥 TRANSITION OVERLAY */}
-      {transitionData && (
-        <div
-          id="arvella-transition"
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: transitionData.width,
-            height: transitionData.height,
-            transform: `translate(${transitionData.x}px, ${transitionData.y}px) scale(1)`,
-            transition: "all 650ms cubic-bezier(0.22,1,0.36,1)",
-            zIndex: 9999,
-            overflow: "hidden",
-          }}
-        >
-          <Image
-            src={transitionData.image}
-            alt=""
-            fill
-            className="object-cover"
-          />
-        </div>
-      )}
-
       {/* GALLERY */}
       <div className="grid grid-cols-[90px_1fr] gap-6 w-full max-w-[760px] aspect-[4/5]">
 
@@ -228,7 +157,6 @@ export default function ProductGallery({ title, image, gallery }: Props) {
 
         {/* MAIN IMAGE */}
         <div
-          ref={mainImageRef}
           className="relative h-full w-full overflow-hidden rounded-[22px] bg-neutral-100 cursor-zoom-in"
           onClick={openLightbox}
         >
@@ -255,7 +183,7 @@ export default function ProductGallery({ title, image, gallery }: Props) {
         </div>
       </div>
 
-      {/* LIGHTBOX (AYNI) */}
+      {/* 🔥 LIGHTBOX */}
       {mounted &&
         isOpen &&
         activeImage &&
@@ -264,6 +192,7 @@ export default function ProductGallery({ title, image, gallery }: Props) {
             className="fixed inset-0 z-[999999] bg-black/95 flex items-center justify-center"
             onMouseDown={closeLightbox}
           >
+            {/* CLOSE */}
             <button
               className="absolute top-6 right-8 text-3xl text-white z-[999999]"
               onMouseDown={closeLightbox}
@@ -271,6 +200,7 @@ export default function ProductGallery({ title, image, gallery }: Props) {
               ✕
             </button>
 
+            {/* IMAGE */}
             <div
               className="relative w-[85vw] h-[75vh] max-w-4xl overflow-hidden"
               onMouseDown={(e) => e.stopPropagation()}
@@ -289,21 +219,30 @@ export default function ProductGallery({ title, image, gallery }: Props) {
                 />
               </div>
 
-              <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-3 px-4 py-2 bg-white/10 backdrop-blur-md rounded-2xl">
+              {/* 🔥 THUMB SLIDER (ETSY STYLE) */}
+              <div
+                className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-3 px-4 py-2 bg-white/10 backdrop-blur-md rounded-2xl"
+                onMouseDown={(e) => e.stopPropagation()}
+              >
                 {images.map((img, index) => {
                   const isActive = activeIndex === index
 
                   return (
                     <button
-                      key={index}
+                      key={`lightbox-thumb-${index}`}
                       onClick={() => changeImage(index)}
-                      className={`relative h-[70px] w-[56px] overflow-hidden rounded-lg border ${
+                      className={`relative h-[70px] w-[56px] overflow-hidden rounded-lg border transition ${
                         isActive
                           ? "border-white"
-                          : "border-white/30 opacity-70"
+                          : "border-white/30 opacity-70 hover:opacity-100"
                       }`}
                     >
-                      <Image src={img} alt="" fill className="object-cover" />
+                      <Image
+                        src={img}
+                        alt=""
+                        fill
+                        className="object-cover"
+                      />
                     </button>
                   )
                 })}
