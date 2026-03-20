@@ -39,7 +39,7 @@ export default function ProductCard({ product }: { product: Product }) {
     const rotateY = ((x - centerX) / centerX) * -4
 
     setTransform(
-      `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`
+      `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.015)`
     )
   }
 
@@ -47,7 +47,6 @@ export default function ProductCard({ product }: { product: Product }) {
     setTransform("perspective(800px) rotateX(0deg) rotateY(0deg) scale(1)")
   }
 
-  // 🔥 EN ÖNEMLİ KISIM
   const handleClick = () => {
     if (!imageRef.current) return
 
@@ -76,7 +75,7 @@ export default function ProductCard({ product }: { product: Product }) {
 
   const mainImage = galleryImages[0] || product.image
   const hoverImage = galleryImages[1] || null
-  const shipping = product.shipping || "COMPLIMENTARY U.S. SHIPPING"
+  const shipping = product.shipping || "Free U.S. Shipping"
 
   return (
     <Link
@@ -94,17 +93,22 @@ export default function ProductCard({ product }: { product: Product }) {
         {/* IMAGE */}
         <div
           ref={imageRef}
-          className="relative w-full aspect-[4/5] overflow-hidden bg-neutral-100"
+          className="relative w-full aspect-[4/5] overflow-hidden bg-neutral-100 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
         >
           <Image
             src={mainImage}
             alt={product.title}
             fill
-            className={`object-cover transition-all duration-700 ${
-              hoverImage
-                ? "group-hover:opacity-0 group-hover:scale-110"
-                : "group-hover:scale-110"
-            }`}
+            className={`
+              object-cover
+              transition-all
+              duration-[900ms]
+              ease-[cubic-bezier(0.22,1,0.36,1)]
+              ${hoverImage
+                ? "group-hover:opacity-0 group-hover:scale-[1.04]"
+                : "group-hover:scale-[1.04]"
+              }
+            `}
           />
 
           {hoverImage && (
@@ -112,16 +116,90 @@ export default function ProductCard({ product }: { product: Product }) {
               src={hoverImage}
               alt="hover"
               fill
-              className="object-cover opacity-0 transition-all duration-700 group-hover:opacity-100 group-hover:scale-110"
+              className="
+                object-cover
+                opacity-0
+                transition-all
+                duration-[900ms]
+                ease-[cubic-bezier(0.22,1,0.36,1)]
+                group-hover:opacity-100
+                group-hover:scale-[1.04]
+              "
             />
           )}
         </div>
 
         {/* TEXT */}
-        <div className="mt-4">
-          <h3 className="text-[15px]">{product.title}</h3>
-          <p className="text-[14px]">{product.price}</p>
+        {/* TEXT */}
+{/* TEXT */}
+<div className="mt-5 space-y-2">
+
+  {/* TITLE + PRICE */}
+  <div className="flex items-start justify-between gap-4">
+
+    <h3 className="
+      text-[13px]
+      tracking-[0.08em]
+      text-neutral-900
+      transition-opacity duration-300
+      group-hover:opacity-70
+    ">
+      {product.title}
+    </h3>
+
+    <div className="text-right whitespace-nowrap">
+
+      {product.comparePrice ? (
+        <div className="flex items-center gap-2 justify-end">
+
+          {/* OLD PRICE */}
+          <span className="
+            text-[12px]
+            text-neutral-400
+            line-through
+          ">
+            {product.comparePrice}
+          </span>
+
+          {/* SALE PRICE */}
+          <span className="
+            text-[13px]
+            text-neutral-900
+            tracking-[0.04em]
+          ">
+            {product.price}
+          </span>
+
         </div>
+      ) : (
+        <span className="
+          text-[13px]
+          text-neutral-500
+          tracking-[0.05em]
+        ">
+          {product.price}
+        </span>
+      )}
+
+    </div>
+
+  </div>
+
+  {/* SHIPPING */}
+  <div className="
+  inline-flex items-center
+  text-[10px]
+  tracking-[0.08em]
+  px-2.5 py-[4px]
+  rounded-full
+  bg-emerald-50/70
+  text-emerald-700/80
+  border border-emerald-100/60
+">
+  Free U.S. Shipping
+</div>
+
+</div>
       </div>
     </Link>
   )
