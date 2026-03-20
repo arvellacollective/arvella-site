@@ -4,6 +4,7 @@ import ProductGallery from "@/components/ProductGallery"
 import products from "@/data/products.json"
 import { notFound } from "next/navigation"
 import { useMemo, useState } from "react"
+import { motion } from "framer-motion"
 
 type Props = {
   params: { slug: string }
@@ -57,7 +58,12 @@ export default function ProductPage({ params }: Props) {
   return (
     <main className="max-w-[1440px] mx-auto px-4 md:px-8 lg:px-10 pt-23 pb-24">
       <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,760px)_minmax(380px,500px)] gap-10 lg:gap-14 items-start">
-        <div className="lg:sticky lg:top-24 self-start">
+        <motion.div
+          initial={{ opacity: 0, scale: 1.04 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="lg:sticky lg:top-24 self-start"
+        >
           <ProductGallery
             title={product.title}
             image={product.image}
@@ -109,10 +115,15 @@ export default function ProductPage({ params }: Props) {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
 
-          <div className="flex flex-col">
-        <div className="self-start">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+          className="flex flex-col"
+        >
+          <div className="self-start">
             <div className="space-y-4 mb-6">
               <p className="text-[10px] uppercase tracking-[0.36em] text-neutral-400">
                 Arvella Edition
@@ -394,7 +405,7 @@ export default function ProductPage({ params }: Props) {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </main>
   )

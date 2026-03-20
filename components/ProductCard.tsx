@@ -1,5 +1,8 @@
+"use client"
+
 import Link from "next/link"
 import Image from "next/image"
+import { useRef, useState } from "react"
 
 type Product = {
   id: string
@@ -15,6 +18,30 @@ type Product = {
 }
 
 export default function ProductCard({ product }: { product: Product }) {
+  const cardRef = useRef<HTMLDivElement>(null)
+
+  const [transform, setTransform] = useState("")
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    const rect = cardRef.current?.getBoundingClientRect()
+    if (!rect) return
+
+    const x = e.clientX - rect.left
+    const y = e.clientY - rect.top
+
+    const centerX = rect.width / 2
+    const centerY = rect.height / 2
+
+    const rotateX = ((y - centerY) / centerY) * 4
+    const rotateY = ((x - centerX) / centerX) * -4
+
+    setTransform(`perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`)
+  }
+
+  const handleMouseLeave = () => {
+    setTransform("perspective(800px) rotateX(0deg) rotateY(0deg) scale(1)")
+  }
+
   const galleryImages =
     product.gallery && product.gallery.length > 0
       ? product.gallery
@@ -31,7 +58,13 @@ export default function ProductCard({ product }: { product: Product }) {
 
   return (
     <Link href={`/shop/${product.slug}`} className="group block w-full">
-      <div className="w-full">
+      <div
+        ref={cardRef}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        style={{ transform }}
+        className="w-full transition-transform duration-300 ease-out will-change-transform"
+      >
 
         {/* IMAGE */}
         <div className="relative w-full aspect-[4/5] overflow-hidden bg-neutral-100">
@@ -61,21 +94,13 @@ export default function ProductCard({ product }: { product: Product }) {
           {/* DARK OVERLAY */}
           <div className="pointer-events-none absolute inset-0 bg-black/0 transition-all duration-500 group-hover:bg-black/25" />
 
-          {/* CTA BUTTON (KEY PART) */}
+          {/* CTA */}
           <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-
-            <div
-              className="
-                opacity-0 translate-y-4
-                transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]
-                group-hover:opacity-100 group-hover:translate-y-0
-              "
-            >
+            <div className="opacity-0 translate-y-4 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:opacity-100 group-hover:translate-y-0">
               <div className="border border-white/80 px-6 py-3 text-[11px] tracking-[0.3em] text-white backdrop-blur-sm bg-white/10">
                 VIEW PRODUCT
               </div>
             </div>
-
           </div>
 
         </div>
