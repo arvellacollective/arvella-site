@@ -67,11 +67,16 @@ export default function Page() {
   }, [scrollLocked])
 
   const textY = useTransform(scrollY, [0, 400], [0, -220])
-  const textOpacity = useTransform(scrollY, [0, 300], [1, 0])
+  const textOpacity = useTransform(scrollY, [0, 250], [1, 0])
+  
 
-  const blurAmount = useTransform(scrollYProgress, [0, 1], ["blur(0px)", "blur(12px)"])
-  const blurOpacity = useTransform(scrollYProgress, [0, 1], [0, 1])
-  const fadeSlide = useTransform(scrollYProgress, [0, 1], ["translateX(100%)", "translateX(0%)"])
+  // 🔥 FADE + DEPTH
+  const fadeOpacity = useTransform(scrollYProgress, [0, 0.7], [0, 1])
+  const heroScale = useTransform(scrollYProgress, [0, 1], [1, 1.05])
+  const heroFilter = useTransform(scrollYProgress, [0, 1], [
+  "brightness(1) blur(0px)",
+  "brightness(0.72) blur(6px)"
+  ])
 
   return (
     <main className="relative min-h-screen bg-white">
@@ -80,119 +85,92 @@ export default function Page() {
       <div className="fixed inset-0 z-0 overflow-hidden">
 
         <AnimatePresence mode="wait">
-          <motion.div
-  key={currentHero}
-  initial={{ opacity: 0, scale: 1.08 }}
-  animate={heroReady ? { opacity: 1, scale: 1 } : { opacity: 0 }}
-  exit={{ opacity: 0 }}
-  transition={{
-    duration: 0.6,
-    ease: [0.4, 0, 0.2, 1],
+		<motion.div
+  style={{
+    opacity: useTransform(scrollYProgress, [0.2, 0.8], [0, 1]),
   }}
-  className="absolute inset-0"
+  className="absolute inset-0 pointer-events-none"
 >
+  <div className="absolute inset-y-0 right-0 w-[45%] 
+    bg-gradient-to-l 
+    from-black/45 
+    via-black/25 
+    via-black/10 
+    to-transparent" />
+</motion.div>
+          <motion.div
+            key={currentHero}
+            initial={{ opacity: 0, scale: 1.08 }}
+            animate={heroReady ? { opacity: 1, scale: 1 } : { opacity: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{
+              duration: 0.6,
+              ease: [0.4, 0, 0.2, 1],
+            }}
+            style={{
+              scale: heroScale,
+              filter: heroFilter
+            }}
+            className="absolute inset-0"
+          >
 
             <Image
-  src={heroes[currentHero]}
-  alt="Arvella Collection"
-  fill
-  priority
-  quality={90}
-  sizes="100vw"
-  className="object-cover object-[15%_20%] md:object-[30%_45%]"
-/>
+              src={heroes[currentHero]}
+              alt="Arvella Collection"
+              fill
+              priority
+              quality={90}
+              sizes="100vw"
+              className="object-cover object-[15%_20%] md:object-[30%_45%]"
+            />
 
           </motion.div>
         </AnimatePresence>
 
-        {/* PREMIUM FADE EFFECT */}
-
+        {/* 🔥 PREMIUM FADE (STABLE) */}
         <motion.div
-  style={{
-    opacity: useTransform(scrollYProgress, [0, 0.85], [0, 1]),
-  }}
-  className="absolute inset-0 pointer-events-none backdrop-blur-[14px]"
->
-  <div
-    className="absolute inset-0"
-    style={{
-      WebkitMaskImage:
-        "linear-gradient(to left, black 0%, rgba(0,0,0,0.92) 18%, rgba(0,0,0,0.75) 36%, rgba(0,0,0,0.48) 55%, rgba(0,0,0,0.22) 72%, rgba(0,0,0,0.08) 84%, transparent 96%)",
-      maskImage:
-        "linear-gradient(to left, black 0%, rgba(0,0,0,0.92) 18%, rgba(0,0,0,0.75) 36%, rgba(0,0,0,0.48) 55%, rgba(0,0,0,0.22) 72%, rgba(0,0,0,0.08) 84%, transparent 96%)",
-    }}
-  />
-</motion.div>
-
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-transparent via-black/5 to-black/22" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-[40%] bg-gradient-to-l from-black/12 via-black/6 to-transparent" />
+          style={{ opacity: fadeOpacity }}
+          className="absolute inset-0 pointer-events-none"
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
+        </motion.div>
 
       </div>
 
       {/* HERO */}
-
       <section ref={heroRef} className="relative z-10 h-screen">
+  <div className="sticky top-0 h-screen">
 
-        <div className="sticky top-0 h-screen">
+    <motion.div
+      style={{ y: textY, opacity: textOpacity }}
+      className="mx-auto flex h-full max-w-[1400px] items-center justify-center md:justify-end px-6 md:px-8"
+    >
+      <div className="inline-block text-center text-white">
 
-          <motion.div
-            style={{ y: textY, opacity: textOpacity }}
-            className="mx-auto flex h-full max-w-[1400px] items-center justify-center md:justify-end px-6 md:px-8"
+        <h1 className="text-4xl md:text-7xl font-light tracking-[0.20em] md:translate-x-[0.11em]">
+          ARVELLA
+        </h1>
+
+        <p className="mt-6 text-base md:text-lg text-white/85 leading-relaxed mx-auto max-w-[520px]">
+          Elevated essentials designed to move with your energy.
+        </p>
+
+        <div className="mt-12 flex justify-center">
+          <Link
+            href="/shop"
+            className="inline-flex items-center justify-center border border-white/80 px-10 py-4 text-xs tracking-[0.32em] text-white transition-all duration-300 hover:border-white hover:bg-white/10"
           >
-
-            <div className="inline-block text-center text-white">
-
-              <h1 className="text-4xl md:text-7xl font-light tracking-[0.20em] md:translate-x-[0.11em]">
-                ARVELLA
-              </h1>
-
-              <p className="mt-6 text-base md:text-lg text-white/85 leading-relaxed mx-auto max-w-[520px]">
-                Elevated essentials designed to move with your energy.
-              </p>
-
-              <div className="mt-12 flex justify-center">
-
-                <Link
-                  href="/shop"
-                  className="inline-flex items-center justify-center border border-white/80 px-10 py-4 text-xs tracking-[0.32em] text-white transition-all duration-300 hover:border-white hover:bg-white/10"
-                >
-                  SHOP COLLECTION
-                </Link>
-
-              </div>
-
-              <div className="mt-14 flex justify-center gap-3">
-
-                {heroes.map((_, i) => (
-
-                  <button
-  key={i}
-  onClick={() => setCurrentHero(i)}
-  className="relative flex items-center justify-center w-10 h-10"
->
-  <span
-    className={`h-[6px] rounded-full transition-all duration-300 ${
-      currentHero === i
-        ? "w-[22px] bg-white"
-        : "w-[6px] bg-white/40 hover:bg-white/70"
-    }`}
-  />
-</button>
-
-                ))}
-
-              </div>
-
-            </div>
-
-          </motion.div>
-
+            SHOP COLLECTION
+          </Link>
         </div>
 
-      </section>
+      </div>
+    </motion.div>
+
+  </div>
+</section>
 
       {/* FEATURED */}
-
       <section className="relative z-20 mt-24 pb-32">
 
         <div className="mx-auto max-w-[1440px] px-8">
@@ -204,16 +182,15 @@ export default function Page() {
             </h2>
 
             <Link
-  href="/shop"
-  className="text-sm tracking-widest !text-white/60 transition hover:!text-white"
->
-  VIEW ALL
-</Link>
+              href="/shop"
+              className="text-sm tracking-widest !text-white/60 transition hover:!text-white"
+            >
+              VIEW ALL
+            </Link>
 
           </div>
 
           {featuredProducts[0] && (
-
             <motion.div
               initial={{ opacity: 0, y: 60 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -221,17 +198,13 @@ export default function Page() {
               viewport={{ once: true }}
               className="mb-16"
             >
-
               <ProductCard product={featuredProducts[0]} />
-
             </motion.div>
-
           )}
 
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
 
             {featuredProducts.slice(1, 5).map((product, index) => (
-
               <motion.div
                 key={product.id}
                 initial={{ opacity: 0, y: 60 }}
@@ -239,11 +212,8 @@ export default function Page() {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
               >
-
                 <ProductCard product={product} />
-
               </motion.div>
-
             ))}
 
           </div>
