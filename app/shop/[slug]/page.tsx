@@ -35,9 +35,16 @@ export default function ProductPage({ params }: Props) {
     const parts = []
     if (selectedSize) parts.push(`Size ${selectedSize}`)
     if (selectedColor) parts.push(selectedColor)
-    if (quantity) parts.push(`Qty ${quantity}`)
+    parts.push(`Qty ${quantity}`)
     return parts.join(" · ")
   }, [selectedSize, selectedColor, quantity])
+
+  const numericPrice = useMemo(() => {
+    const parsed = Number(String(product.price).replace(/[^0-9.]/g, ""))
+    return Number.isFinite(parsed) ? parsed : 59
+  }, [product.price])
+
+  const comparePrice = useMemo(() => numericPrice + 19, [numericPrice])
 
   const etsyUrl = isReady
     ? `${product.url}?size=${encodeURIComponent(
@@ -48,50 +55,108 @@ export default function ProductPage({ params }: Props) {
     : "#"
 
   return (
-    <main className="max-w-[1440px] mx-auto px-4 md:px-8 lg:px-10 pt-10 pb-20">
-      <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,760px)_minmax(360px,480px)] gap-10 lg:gap-14 items-start">
-        <ProductGallery
-          title={product.title}
-          image={product.image}
-          gallery={product.gallery}
-        />
-
+    <main className="max-w-[1440px] mx-auto px-4 md:px-8 lg:px-10 pt-23 pb-24">
+      <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,760px)_minmax(380px,500px)] gap-10 lg:gap-14 items-start">
         <div className="lg:sticky lg:top-24 self-start">
-          <div className="flex flex-col">
-            <div className="space-y-5">
-              <div className="space-y-3">
-                <p className="text-[10px] uppercase tracking-[0.38em] text-neutral-400">
-                  Arvella Edition
+          <ProductGallery
+            title={product.title}
+            image={product.image}
+            gallery={product.gallery}
+          />
+
+          <div className="mt-5 rounded-[26px] border border-neutral-200 bg-white/90 px-5 py-5 shadow-[0_10px_30px_rgba(0,0,0,0.03)]">
+            <div className="flex items-start justify-between gap-6">
+              <div>
+                <p className="text-[10px] uppercase tracking-[0.32em] text-neutral-400">
+                  Editorial detail
                 </p>
-
-                <h1 className="text-[36px] leading-[1.05] md:text-[44px] font-semibold tracking-[-0.03em] text-neutral-950">
-                  {product.title}
-                </h1>
-
-                <p className="text-[12px] uppercase tracking-[0.26em] text-neutral-400">
-                  For those who move differently
+                <p className="mt-3 text-[20px] leading-[1.25] tracking-[-0.02em] text-neutral-900">
+                  Quiet presence. Sharp silhouette.
                 </p>
               </div>
 
-              <div className="space-y-4 border-t border-neutral-200 pt-5">
-                <p className="text-[22px] tracking-[-0.02em] text-neutral-700">
-                  {product.price}
+              <div className="hidden sm:block text-right">
+                <p className="text-[10px] uppercase tracking-[0.24em] text-neutral-400">
+                  Limited drop
                 </p>
-
-                <p className="max-w-[46ch] text-[15px] leading-8 text-neutral-600">
-                  {product.description} Refined for a clean silhouette, quiet
-                  presence, and everyday wear that still feels intentional.
+                <p className="mt-2 text-[13px] text-neutral-600">
+                  Curated for elevated everyday wear.
                 </p>
               </div>
             </div>
 
-            <div className="mt-10 rounded-[24px] border border-neutral-200 bg-white/90 p-5 md:p-6 shadow-[0_10px_30px_rgba(0,0,0,0.03)]">
+            <div className="mt-5 h-px w-full bg-neutral-200" />
+
+            <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <p className="text-[10px] uppercase tracking-[0.24em] text-neutral-400">
+                  Concept
+                </p>
+                <p className="mt-2 text-[14px] leading-7 text-neutral-600">
+                  A premium layer designed to feel clean, deliberate, and easy
+                  to live in.
+                </p>
+              </div>
+
+              <div>
+                <p className="text-[10px] uppercase tracking-[0.24em] text-neutral-400">
+                  Mood
+                </p>
+                <p className="mt-2 text-[14px] leading-7 text-neutral-600">
+                  Minimal structure, softer energy, and a silhouette that feels
+                  intentional without trying hard.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+          <div className="flex flex-col">
+        <div className="self-start">
+            <div className="space-y-4 mb-6">
+              <p className="text-[10px] uppercase tracking-[0.36em] text-neutral-400">
+                Arvella Edition
+              </p>
+
+              <h1 className="text-[36px] leading-[1.02] md:text-[46px] font-semibold tracking-[-0.04em] text-neutral-950">
+                {product.title}
+              </h1>
+
+              <p className="text-[12px] uppercase tracking-[0.28em] text-neutral-400">
+                For those who move differently
+              </p>
+            </div>
+
+            <div className="mt-7 border-t border-neutral-200 pt-6">
+              <div className="flex items-end gap-3 flex-wrap">
+                <p className="text-[17px] text-neutral-400 line-through">
+                  ${comparePrice}
+                </p>
+
+                <p className="text-[30px] leading-none tracking-[-0.03em] text-neutral-900">
+                  ${numericPrice}
+                </p>
+
+                <span className="inline-flex h-7 items-center rounded-full bg-neutral-900 px-3 text-[10px] uppercase tracking-[0.22em] text-white">
+                  Limited release pricing
+                </span>
+              </div>
+
+              <p className="mt-5 max-w-[48ch] text-[15px] leading-8 text-neutral-600">
+                {product.description} Refined for a cleaner silhouette, quiet
+                presence, and premium everyday wear that still feels special the
+                moment it arrives.
+              </p>
+            </div>
+
+            <div className="mt-10 rounded-[28px] border border-neutral-200 bg-white/92 p-6 md:p-7 shadow-[0_14px_40px_rgba(0,0,0,0.035)]">
               <div className="space-y-8">
                 <div className="space-y-3">
                   <div className="flex items-center justify-between gap-4">
                     <span className="text-[11px] uppercase tracking-[0.24em] text-neutral-500">
                       Size
                     </span>
+
                     {selectedSize && (
                       <span className="text-[11px] uppercase tracking-[0.18em] text-neutral-400">
                         Selected: {selectedSize}
@@ -99,7 +164,7 @@ export default function ProductPage({ params }: Props) {
                     )}
                   </div>
 
-                  <div className="grid grid-cols-4 gap-2">
+                  <div className="grid grid-cols-4 gap-2.5">
                     {sizes.map((size) => {
                       const active = selectedSize === size
 
@@ -110,8 +175,8 @@ export default function ProductPage({ params }: Props) {
                           onClick={() => setSelectedSize(size)}
                           className={`h-12 rounded-full border text-[13px] transition-all duration-300 ${
                             active
-                              ? "border-black bg-black text-white shadow-[0_8px_24px_rgba(0,0,0,0.16)]"
-                              : "border-neutral-300 bg-white text-neutral-800 hover:border-neutral-900"
+                              ? "border-black bg-black text-white shadow-[0_10px_24px_rgba(0,0,0,0.16)]"
+                              : "border-neutral-300 bg-white text-neutral-800 hover:border-neutral-900 hover:scale-[1.01]"
                           }`}
                         >
                           {size}
@@ -126,6 +191,7 @@ export default function ProductPage({ params }: Props) {
                     <span className="text-[11px] uppercase tracking-[0.24em] text-neutral-500">
                       Color
                     </span>
+
                     {selectedColor && (
                       <span className="text-[11px] uppercase tracking-[0.18em] text-neutral-400">
                         Selected: {selectedColor}
@@ -133,7 +199,7 @@ export default function ProductPage({ params }: Props) {
                     )}
                   </div>
 
-                  <div className="grid grid-cols-3 gap-2">
+                  <div className="grid grid-cols-3 gap-2.5">
                     {colors.map((color) => {
                       const active = selectedColor === color
 
@@ -144,8 +210,8 @@ export default function ProductPage({ params }: Props) {
                           onClick={() => setSelectedColor(color)}
                           className={`h-12 rounded-full border px-4 text-[13px] transition-all duration-300 ${
                             active
-                              ? "border-black bg-black text-white shadow-[0_8px_24px_rgba(0,0,0,0.16)]"
-                              : "border-neutral-300 bg-white text-neutral-800 hover:border-neutral-900"
+                              ? "border-black bg-black text-white shadow-[0_10px_24px_rgba(0,0,0,0.16)]"
+                              : "border-neutral-300 bg-white text-neutral-800 hover:border-neutral-900 hover:scale-[1.01]"
                           }`}
                         >
                           {color}
@@ -156,9 +222,15 @@ export default function ProductPage({ params }: Props) {
                 </div>
 
                 <div className="space-y-3">
-                  <span className="block text-[11px] uppercase tracking-[0.24em] text-neutral-500">
-                    Quantity
-                  </span>
+                  <div className="flex items-center justify-between gap-4">
+                    <span className="text-[11px] uppercase tracking-[0.24em] text-neutral-500">
+                      Quantity
+                    </span>
+
+                    <span className="text-[11px] uppercase tracking-[0.18em] text-neutral-400">
+                      Editable before checkout
+                    </span>
+                  </div>
 
                   <div className="inline-flex items-center rounded-full border border-neutral-300 bg-white px-2 py-2">
                     <button
@@ -205,13 +277,23 @@ export default function ProductPage({ params }: Props) {
                   onClick={(e) => {
                     if (!isReady) e.preventDefault()
                   }}
-                  className={`group relative flex w-full items-center justify-between overflow-hidden rounded-[22px] border px-5 py-5 transition-all duration-300 ${
+                  className={`group relative flex w-full items-center justify-between overflow-hidden rounded-[24px] border px-5 py-5 transition-all duration-300 ${
                     isReady
-                      ? "border-[#F1641E]/40 bg-white hover:border-[#F1641E] hover:shadow-[0_16px_36px_rgba(0,0,0,0.08)]"
+                      ? "border-[#F1641E]/40 bg-white hover:border-[#F1641E] hover:shadow-[0_18px_42px_rgba(0,0,0,0.09)]"
                       : "border-neutral-200 bg-neutral-100 opacity-70"
                   }`}
                 >
-                  <div className="flex items-center gap-4">
+                  <div
+                    className={`pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 ${
+                      isReady ? "group-hover:opacity-100" : ""
+                    }`}
+                    style={{
+                      background:
+                        "linear-gradient(90deg, rgba(241,100,30,0.04) 0%, rgba(241,100,30,0.00) 45%, rgba(241,100,30,0.04) 100%)",
+                    }}
+                  />
+
+                  <div className="relative flex items-center gap-4">
                     <div
                       className={`flex h-11 w-11 items-center justify-center rounded-xl text-white shadow-sm transition-all duration-300 ${
                         isReady ? "bg-[#F1641E]" : "bg-neutral-300"
@@ -236,7 +318,7 @@ export default function ProductPage({ params }: Props) {
                   </div>
 
                   <div
-                    className={`flex h-10 w-10 items-center justify-center rounded-full border transition-all duration-300 ${
+                    className={`relative flex h-10 w-10 items-center justify-center rounded-full border transition-all duration-300 ${
                       isReady
                         ? "border-neutral-200 text-neutral-900 group-hover:border-[#F1641E] group-hover:bg-[#F1641E] group-hover:text-white"
                         : "border-neutral-200 text-neutral-400"
@@ -261,44 +343,55 @@ export default function ProductPage({ params }: Props) {
                 </a>
 
                 <div className="mt-5 grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  <div className="rounded-2xl bg-neutral-50 px-4 py-3">
+                  <div className="rounded-[22px] bg-neutral-50 px-4 py-4">
                     <p className="text-[10px] uppercase tracking-[0.22em] text-neutral-400">
                       Shipping
                     </p>
-                    <p className="mt-1 text-[13px] text-neutral-700">
+                    <p className="mt-2 text-[13px] leading-6 text-neutral-700">
                       {product.shipping}
                     </p>
                   </div>
 
-                  <div className="rounded-2xl bg-neutral-50 px-4 py-3">
+                  <div className="rounded-[22px] bg-neutral-50 px-4 py-4">
                     <p className="text-[10px] uppercase tracking-[0.22em] text-neutral-400">
                       Checkout
                     </p>
-                    <p className="mt-1 text-[13px] text-neutral-700">
-                      Secure via Etsy
+                    <p className="mt-2 text-[13px] leading-6 text-neutral-700">
+                      Secure payment via Etsy
                     </p>
                   </div>
 
-                  <div className="rounded-2xl bg-neutral-50 px-4 py-3">
+                  <div className="rounded-[22px] bg-neutral-50 px-4 py-4">
                     <p className="text-[10px] uppercase tracking-[0.22em] text-neutral-400">
-                      Returns
+                      Support
                     </p>
-                    <p className="mt-1 text-[13px] text-neutral-700">
-                      Easy support
+                    <p className="mt-2 text-[13px] leading-6 text-neutral-700">
+                      Easy post-purchase help
                     </p>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="mt-6 px-1">
-              <p className="text-[11px] uppercase tracking-[0.28em] text-neutral-400">
+            <div className="mt-7 rounded-[26px] border border-neutral-200 bg-white/85 px-5 py-5">
+              <p className="text-[10px] uppercase tracking-[0.3em] text-neutral-400">
                 Editorial note
               </p>
-              <p className="mt-3 max-w-[50ch] text-[14px] leading-7 text-neutral-500">
-                Built to feel understated, premium, and intentional before the
-                first click to checkout.
+
+              <p className="mt-3 text-[14px] leading-7 text-neutral-600">
+                Built to feel elevated before checkout and effortless after it
+                arrives — premium, understated, and designed to keep its
+                presence in everyday wear.
               </p>
+
+              <div className="mt-5 flex items-center justify-between gap-4 border-t border-neutral-200 pt-4">
+                <span className="text-[11px] uppercase tracking-[0.24em] text-neutral-400">
+                  Arvella Collective
+                </span>
+                <span className="text-[11px] uppercase tracking-[0.24em] text-neutral-400">
+                  Quiet Presence
+                </span>
+              </div>
             </div>
           </div>
         </div>
