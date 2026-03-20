@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import Image from "next/image"
-import { useRef, useState } from "react"
+import { useRef } from "react"
 
 type Product = {
   id: string
@@ -20,186 +20,226 @@ type Product = {
 const TRANSITION_KEY = "arvella_transition"
 
 export default function ProductCard({ product }: { product: Product }) {
-  const cardRef = useRef<HTMLDivElement>(null)
   const imageRef = useRef<HTMLDivElement>(null)
-
-  const [transform, setTransform] = useState("")
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    const rect = cardRef.current?.getBoundingClientRect()
-    if (!rect) return
-
-    const x = e.clientX - rect.left
-    const y = e.clientY - rect.top
-
-    const centerX = rect.width / 2
-    const centerY = rect.height / 2
-
-    const rotateX = ((y - centerY) / centerY) * 4
-    const rotateY = ((x - centerX) / centerX) * -4
-
-    setTransform(
-      `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.015)`
-    )
-  }
-
-  const handleMouseLeave = () => {
-    setTransform("perspective(800px) rotateX(0deg) rotateY(0deg) scale(1)")
-  }
+  const mainImgRef = useRef<HTMLImageElement | null>(null)
 
   const handleClick = () => {
-    if (!imageRef.current) return
+    if (!imageRef.current || !product) return
 
     const rect = imageRef.current.getBoundingClientRect()
 
-    const data = {
-      slug: product.slug,
-      image: product.image,
-      x: rect.left,
-      y: rect.top,
-      width: rect.width,
-      height: rect.height,
-    }
-
-    sessionStorage.setItem(TRANSITION_KEY, JSON.stringify(data))
+    sessionStorage.setItem(
+      TRANSITION_KEY,
+      JSON.stringify({
+        slug: product.slug,
+        image: product.image,
+        x: rect.left,
+        y: rect.top,
+        width: rect.width,
+        height: rect.height,
+      })
+    )
   }
 
   const galleryImages =
-    product.gallery && product.gallery.length > 0
+    product?.gallery?.length
       ? product.gallery
-      : product.images && product.images.length > 0
+      : product?.images?.length
       ? product.images
-      : product.image2
-      ? [product.image, product.image2]
-      : [product.image]
+      : product?.image2
+        ? [product.image, product.image2]
+        : [product.image || "/placeholder.png"]
 
-  const mainImage = galleryImages[0] || product.image
+  const mainImage = galleryImages[0]
   const hoverImage = galleryImages[1] || null
-  const shipping = product.shipping || "Free U.S. Shipping"
 
   return (
     <Link
-      href={`/shop/${product.slug}`}
+      href={`/shop/${product?.slug || "#"}`}
       className="group block w-full"
       onClick={handleClick}
     >
-      <div
-        ref={cardRef}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-        style={{ transform }}
-        className="w-full transition-transform duration-300 ease-out will-change-transform"
-      >
-        {/* IMAGE */}
+      {/* WRAPPER (relative şart) */}
+      <div className="relative">
+
+        {/* TILT ONLY IMAGE */}
         <div
-          ref={imageRef}
-          className="relative w-full aspect-[4/5] overflow-hidden bg-neutral-100 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+		data-tilt
+          onMouseMove={(e) => {
+            const rect = e.currentTarget.getBoundingClientRect()
+
+            const x = e.clientX - rect.left
+            const y = e.clientY - rect.top
+
+            const centerX = rect.width / 2
+            const centerY = rect.height / 2
+
+            const clamp = (val: number, min: number, max: number) =>
+              Math.max(min, Math.min(max, val))
+
+            const rotateX = clamp(-(y - centerY) / 60, -2.5, 2.5)
+            const rotateY = clamp(-(x - centerX) / 60, -2.5, 2.5)
+
+            const shadowX = (x - centerX) / 18
+            const shadowY = (y - centerY) / 18
+
+            e.currentTarget.style.transform = `
+              perspective(1000px)
+              rotateX(${rotateX}deg)
+              rotateY(${rotateY}deg)
+              scale(1.015)
+              translateY(-2px)
+            `
+
+            e.currentTarget.style.boxShadow = `
+              ${-shadowX}px ${12 + shadowY}px 32px rgba(0,0,0,0.16),
+              0 18px 40px rgba(0,0,0,0.10)
+            `
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = `
+              perspective(1000px)
+              rotateX(0deg)
+              rotateY(0deg)
+              scale(1)
+              translateY(0)
+            `
+
+            e.currentTarget.style.boxShadow =
+              "0 10px 25px rgba(0,0,0,0.08)"
+          }}
+          className="
+            w-full
+            transition-[transform,box-shadow]
+            duration-500
+            ease-[cubic-bezier(0.22,1,0.36,1)]
+            transform-gpu
+            will-change-transform
+          "
         >
-          <Image
-            src={mainImage}
-            alt={product.title}
-            fill
-            className={`
-              object-cover
-              transition-all
-              duration-[900ms]
-              ease-[cubic-bezier(0.22,1,0.36,1)]
-              ${hoverImage
-                ? "group-hover:opacity-0 group-hover:scale-[1.04]"
-                : "group-hover:scale-[1.04]"
-              }
-            `}
-          />
-
-          {hoverImage && (
+          {/* IMAGE */}
+          <div
+            ref={imageRef}
+            className="
+              relative
+              w-full
+              aspect-[4/5]
+              overflow-hidden
+              bg-neutral-100
+            "
+          >
             <Image
-              src={hoverImage}
-              alt="hover"
+              ref={mainImgRef}
+              src={mainImage}
+              alt={product?.title || "Product"}
               fill
-              className="
-                object-cover
-                opacity-0
-                transition-all
-                duration-[900ms]
-                ease-[cubic-bezier(0.22,1,0.36,1)]
-                group-hover:opacity-100
-                group-hover:scale-[1.04]
-              "
+              className="object-cover transition-transform duration-300 ease-out"
             />
-          )}
+
+            {hoverImage && (
+              <Image
+                src={hoverImage}
+                alt="hover"
+                fill
+                className="object-cover opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100"
+              />
+            )}
+
+            {/* GRADIENT ONLY */}
+            <div className="
+              pointer-events-none
+              absolute
+              inset-0
+              bg-gradient-to-t
+              from-black/30
+              via-black/10
+              to-transparent
+              opacity-70
+              transition-opacity
+              duration-500
+              group-hover:opacity-90
+            " />
+          </div>
         </div>
 
-        {/* TEXT */}
-        {/* TEXT */}
-{/* TEXT */}
-<div className="mt-5 space-y-2">
+        {/* TEXT - SEPARATE LAYER (CRITICAL FIX) */}
+        <div
+  className="
+    pointer-events-none
+    absolute
+    inset-x-0
+    bottom-0
+    pb-6
+    text-center
+    transition-transform
+    duration-300
+    ease-out
+  "
+  ref={(el) => {
+    if (!el) return
 
-  {/* TITLE + PRICE */}
-  <div className="flex items-start justify-between gap-4">
+    const parent = el.parentElement?.querySelector('[data-tilt]')
+    if (!parent) return
 
-    <h3 className="
-      text-[13px]
-      tracking-[0.08em]
-      text-neutral-900
-      transition-opacity duration-300
-      group-hover:opacity-70
-    ">
-      {product.title}
-    </h3>
+    parent.addEventListener("mousemove", (e: any) => {
+      const rect = parent.getBoundingClientRect()
 
-    <div className="text-right whitespace-nowrap">
+      const x = e.clientX - rect.left
+      const y = e.clientY - rect.top
 
-      {product.comparePrice ? (
-        <div className="flex items-center gap-2 justify-end">
+      const centerX = rect.width / 2
+      const centerY = rect.height / 2
 
-          {/* OLD PRICE */}
-          <span className="
-            text-[12px]
-            text-neutral-400
-            line-through
-          ">
-            {product.comparePrice}
-          </span>
+      const moveX = (x - centerX) / 40
+      const moveY = (y - centerY) / 40
 
-          {/* SALE PRICE */}
-          <span className="
-            text-[13px]
-            text-neutral-900
-            tracking-[0.04em]
-          ">
-            {product.price}
-          </span>
+      el.style.transform = `translate(${moveX}px, ${moveY}px)`
+    })
 
-        </div>
-      ) : (
-        <span className="
-          text-[13px]
-          text-neutral-500
-          tracking-[0.05em]
-        ">
-          {product.price}
-        </span>
-      )}
+    parent.addEventListener("mouseleave", () => {
+      el.style.transform = "translate(0,0)"
+    })
+  }}
+>
+          <div
+            className="space-y-1.5"
+            style={{
+              WebkitFontSmoothing: "antialiased",
+              MozOsxFontSmoothing: "grayscale"
+            }}
+          >
+            <h3 className="text-[15.5px] tracking-[0.12em] text-white font-medium">
+              {product?.title || "Product"}
+            </h3>
 
-    </div>
+            <div>
+              <span className="text-[21px] text-white font-semibold tracking-[0.02em] [text-shadow:0_0_1px_rgba(0,0,0,0.2)]">
+                {product?.price || ""}
+              </span>
+            </div>
 
-  </div>
-
-  {/* SHIPPING */}
-  <div className="
-  inline-flex items-center
+            {product?.shipping && (
+              <div className="pt-1">
+                <span className="
+  inline-block
+  mt-1
+  px-3
+  py-[4px]
   text-[10px]
-  tracking-[0.08em]
-  px-2.5 py-[4px]
+  tracking-[0.14em]
+  uppercase
+  text-[#5FAF92]
+  bg-[#EAF7F1]/80
+  backdrop-blur-sm
   rounded-full
-  bg-emerald-50/70
-  text-emerald-700/80
-  border border-emerald-100/60
 ">
-  Free U.S. Shipping
-</div>
+                  {product.shipping}
+                </span>
+              </div>
+            )}
+          </div>
+        </div>
 
-</div>
       </div>
     </Link>
   )

@@ -9,20 +9,45 @@ export default async function ShopPage() {
     <main className="bg-white">
 
       {/* HEADER */}
-      <div className="max-w-[1400px] mx-auto px-6 md:px-8 pt-24 md:pt-32 pb-12 md:pb-20">
+      <div className="
+        max-w-[1400px]
+        mx-auto
+        px-6 md:px-8
 
-        <h1 className="text-[28px] md:text-[40px] font-light tracking-[0.18em] text-neutral-900">
+        pt-28 md:pt-36
+        pb-16 md:pb-20
+      ">
+
+        <h1 className="
+          text-[40px]
+          md:text-[64px]
+          font-semibold
+          tracking-[0.08em]
+          md:tracking-[0.06em]
+          text-neutral-900
+          leading-[1.05]
+        ">
           SHOP
         </h1>
 
-        <p className="mt-3 md:mt-4 text-[12px] md:text-[13px] tracking-[0.04em] text-neutral-500 leading-relaxed max-w-[420px] md:max-w-[480px]">
+        <div className="mt-5 w-10 h-[1px] bg-neutral-900/10" />
+
+        <p className="
+          mt-5
+          text-[13px]
+          md:text-[14px]
+          tracking-[0.04em]
+          text-neutral-400
+          leading-relaxed
+          max-w-[340px]
+        ">
           Elevated essentials designed for quiet confidence.
         </p>
 
       </div>
 
       {/* GRID */}
-      <div className="max-w-[1400px] mx-auto px-5 md:px-8 pb-24 md:pb-28">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-8 pb-28 md:pb-32">
 
         <div
           className="
@@ -37,7 +62,7 @@ export default async function ShopPage() {
             md:gap-y-24
           "
         >
-          {products.map((product, index) => (
+          {products.filter(Boolean).map((product, index) => (
             <div
               key={product.id}
               className={`
@@ -47,7 +72,6 @@ export default async function ShopPage() {
                 md:hover:!opacity-100
 
                 ${index === 0 ? "col-span-2 md:col-span-2 md:row-span-2" : ""}
-
                 ${index === 1 ? "md:translate-y-4" : ""}
                 ${index === 2 ? "md:translate-y-8" : ""}
                 ${index === 4 ? "md:translate-y-6" : ""}
