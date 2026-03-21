@@ -39,7 +39,7 @@ export default function Page() {
     setHeroReady(true)
   }, 80)
 
-  let timer
+  let timer: ReturnType<typeof setTimeout>
 
   if (!scrollLocked) {
     timer = setTimeout(() => {
