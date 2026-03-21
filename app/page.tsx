@@ -16,6 +16,7 @@ export default function Page() {
   const [currentHero, setCurrentHero] = useState(0)
   const [heroReady, setHeroReady] = useState(false)
   const [scrollLocked, setScrollLocked] = useState(false)
+  const [progressKey, setProgressKey] = useState(0)
 
   const heroes = [
     "/hero-arvella-4k.webp",
@@ -34,37 +35,31 @@ export default function Page() {
 
     getFeaturedProducts(5).then(setFeaturedProducts)
 
-    const readyTimer = setTimeout(() => {
-      setHeroReady(true)
-    }, 80)
+  const readyTimer = setTimeout(() => {
+    setHeroReady(true)
+  }, 80)
 
-    const interval = setInterval(() => {
+  let timer
 
-      if (!scrollLocked) {
-        setCurrentHero((prev) => (prev + 1) % heroes.length)
-      }
+  if (!scrollLocked) {
+    timer = setTimeout(() => {
+      setCurrentHero((prev) => (prev + 1) % heroes.length)
+      setProgressKey((prev) => prev + 1)
+    }, 5000)
+  }
 
-    }, 7000)
+  const unsubscribe = scrollY.on("change", (v) => {
+    if (v > 20 && !scrollLocked) setScrollLocked(true)
+    if (v < 5) setScrollLocked(false)
+  })
 
-    const unsubscribe = scrollY.on("change", (v) => {
+  return () => {
+    clearTimeout(readyTimer)
+    clearTimeout(timer)
+    unsubscribe()
+  }
 
-      if (v > 20 && !scrollLocked) {
-        setScrollLocked(true)
-      }
-
-      if (v < 5) {
-        setScrollLocked(false)
-      }
-
-    })
-
-    return () => {
-      clearTimeout(readyTimer)
-      clearInterval(interval)
-      unsubscribe()
-    }
-
-  }, [scrollLocked])
+}, [currentHero, scrollLocked])
 
   const textY = useTransform(scrollY, [0, 400], [0, -220])
   const textOpacity = useTransform(scrollY, [0, 250], [1, 0])
@@ -73,10 +68,11 @@ export default function Page() {
   // 🔥 FADE + DEPTH
   const fadeOpacity = useTransform(scrollYProgress, [0, 0.7], [0, 1])
   const heroScale = useTransform(scrollYProgress, [0, 1], [1, 1.05])
-  const heroFilter = useTransform(scrollYProgress, [0, 1], [
+  const heroFilter = useTransform(scrollYProgress, [0, 0.2, 1], [
   "brightness(1) blur(0px)",
-  "brightness(0.72) blur(6px)"
-  ])
+  "brightness(1) blur(0px)",
+  "brightness(0.75) blur(2px)"
+])
 
   return (
     <main className="relative min-h-screen bg-white">
@@ -119,8 +115,8 @@ export default function Page() {
               alt="Arvella Collection"
               fill
               priority
-              quality={90}
-              sizes="100vw"
+              quality={100}
+              sizes="(max-width: 768px) 200vw, 100vw"
               className="object-cover object-[15%_20%] md:object-[30%_45%]"
             />
 
@@ -163,8 +159,34 @@ export default function Page() {
             SHOP COLLECTION
           </Link>
         </div>
+<div className="mt-6 flex justify-center gap-3">
+  {heroes.map((_, i) => (
+    <button
+      key={i}
+      onClick={() => {
+  setCurrentHero(i)
+  setProgressKey((prev) => prev + 1)
+}}
+      className="relative h-8 flex items-center justify-center px-1 group"
+    >
+      {/* BACK BAR */}
+      <span className="block w-10 h-[3px] bg-white/20 rounded-full overflow-hidden">
 
+        {/* PROGRESS */}
+        {i === currentHero && (
+          <span
+            key={progressKey}
+            className="block h-full bg-white rounded-full animate-[progressBar_5s_linear]"
+          />
+        )}
+
+      </span>
+    </button>
+  ))}
+</div>
+  
       </div>
+	  
     </motion.div>
 
   </div>

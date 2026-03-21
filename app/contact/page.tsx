@@ -25,28 +25,48 @@ export default function ContactPage() {
         <div className="grid grid-cols-1 md:grid-cols-[0.45fr_0.55fr] gap-16 md:gap-24">
 
           {/* LEFT */}
-          <div>
+          <div className="md:pr-12 lg:pr-16 relative">
 
-            <h1 className="text-[44px] md:text-[72px] font-semibold tracking-[0.08em] text-neutral-900 leading-[1.05]">
+            {/* subtle depth */}
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/[0.015] to-transparent pointer-events-none" />
+
+            <h1 className="text-[44px] md:text-[72px] font-medium tracking-[0.12em] text-neutral-900 leading-[1.05]">
               CONTACT
             </h1>
 
-            <div className="mt-6 w-10 h-[1px] bg-neutral-900/10" />
+            {/* editorial line stack */}
+            <div className="mt-8 flex flex-col gap-1">
+              <div className="w-12 h-[1px] bg-neutral-900/20" />
+              <div className="w-6 h-[1px] bg-neutral-900/10" />
+            </div>
 
-            <p className="mt-6 text-[15px] md:text-[16px] text-neutral-500 leading-relaxed max-w-[420px]">
-              Let’s build something intentional.
+            <p className="mt-8 text-[15px] md:text-[16px] text-neutral-500/80 leading-[1.8] max-w-[420px]">
+              Built with intention.
               <br />
-              For inquiries, collaborations, or support — reach out.
+              Made for quiet presence.
             </p>
 
-            <div className="mt-20 space-y-2">
-              <p className="text-[11px] tracking-[0.12em] text-neutral-400">
+            <div className="mt-24 space-y-3">
+              <p className="text-[11px] tracking-[0.18em] text-neutral-400/70">
                 EMAIL
               </p>
-              <p className="text-[14px] tracking-[0.04em] text-neutral-900">
+              <p className="text-[15px] tracking-[0.08em] text-neutral-900 hover:opacity-70 transition">
                 contact@arvellacollective.com
               </p>
             </div>
+
+            {/* signature block */}
+            <div className="mt-16 space-y-2">
+              <p className="text-[11px] tracking-[0.18em] text-neutral-400/60">
+                ARVELLA COLLECTIVE
+              </p>
+              <p className="text-[13px] tracking-[0.08em] text-neutral-900/80">
+                Quiet presence.
+              </p>
+            </div>
+
+            {/* subtle editorial vertical line */}
+            <div className="absolute -left-6 top-0 bottom-0 w-[1px] bg-neutral-900/5 hidden md:block" />
 
           </div>
 
@@ -77,7 +97,6 @@ export default function ContactPage() {
                 />
 
                 <div className="absolute left-0 bottom-0 w-full h-[1px] bg-neutral-200" />
-
                 <div className="absolute left-0 bottom-0 h-[1px] bg-neutral-900 w-0 transition-all duration-500 ease-out group-focus-within:w-full" />
               </div>
 
@@ -103,7 +122,6 @@ export default function ContactPage() {
                 />
 
                 <div className="absolute left-0 bottom-0 w-full h-[1px] bg-neutral-200" />
-
                 <div className="absolute left-0 bottom-0 h-[1px] bg-neutral-900 w-0 transition-all duration-500 ease-out group-focus-within:w-full" />
               </div>
 
@@ -120,7 +138,6 @@ export default function ContactPage() {
                 />
 
                 <div className="absolute left-0 bottom-0 w-full h-[1px] bg-neutral-200" />
-
                 <div className="absolute left-0 bottom-0 h-[1px] bg-neutral-900 w-0 transition-all duration-500 ease-out group-focus-within:w-full" />
               </div>
 
@@ -134,20 +151,17 @@ export default function ContactPage() {
                     self-start
                     px-8
                     py-3
-					w-full
+                    w-full
                     border rounded-[6px]
                     text-[12px]
                     tracking-[0.28em]
                     flex items-center justify-center
-
                     transition-all duration-300 ease-out
-
                     ${
                       success
                         ? "border-green-600 text-green-600 bg-green-600/5"
                         : "border-black/20 text-neutral-900/90 hover:border-black/40 hover:bg-black/[0.04]"
                     }
-
                     ${loading ? "opacity-50 cursor-not-allowed" : ""}
                   `}
                 >
@@ -156,7 +170,6 @@ export default function ContactPage() {
                   ) : loading ? (
                     <span className="relative flex items-center">
                       SENDING
-
                       <span className="absolute left-0 -bottom-[6px] h-[1px] w-full overflow-hidden">
                         <span className="block h-full w-full bg-gradient-to-r from-transparent via-neutral-900/70 to-transparent blur-[0.5px] animate-[loadingBar_1.2s_ease-in-out_infinite]" />
                       </span>
@@ -168,7 +181,7 @@ export default function ContactPage() {
 
                 <p
                   className={`
-                    w-
+                    w-full
                     text-left
                     text-[12px]
                     tracking-[0.04em]
