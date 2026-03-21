@@ -46,82 +46,109 @@ export async function POST(request: Request) {
     const safeEmail = escapeHtml(email)
     const safeMessage = escapeHtml(message).replace(/\n/g, "<br />")
 
-    // 🔥 PREMIUM ADMIN MAIL
+    // 🔥 PREMIUM ADMIN MAIL (UPGRADED)
     const adminHtml = `
       <div style="
-        background: radial-gradient(circle at 50% 0%, #f5f3f1 0%, #e9e6e2 100%);
-        padding:40px 20px;
+        background:#f4f2ef;
+        padding:32px 16px;
         font-family:Helvetica,Arial,sans-serif;
       ">
         <div style="
           max-width:520px;
           margin:0 auto;
           background:#ffffff;
-          padding:34px 30px;
+          padding:32px 28px;
           color:#1a1a1a;
         ">
           
-          <p style="
-            font-size:10px;
-            letter-spacing:0.3em;
-            color:#999;
-            text-align:center;
-            margin-bottom:18px;
-          ">
-            ARVELLA CONTACT
-          </p>
-
-          <h2 style="
-            text-align:center;
-            font-weight:500;
-            margin-bottom:28px;
-            letter-spacing:-0.02em;
-          ">
-            New Contact Inquiry
-          </h2>
-
-          <!-- INFO BLOCK -->
-          <div style="margin-bottom:20px;">
-            <p style="font-size:10px;letter-spacing:0.2em;color:#999;margin-bottom:6px;">
-              NAME
+          <div style="text-align:center;margin-bottom:26px;">
+            <p style="
+              font-size:10px;
+              letter-spacing:0.4em;
+              color:#aaa;
+              margin-bottom:10px;
+            ">
+              ARVELLA CONTACT
             </p>
-            <p style="margin:0;font-size:14px;color:#1a1a1a;">
-              ${safeName}
-            </p>
+
+            <div style="
+              width:40px;
+              height:1px;
+              background:#e5e5e5;
+              margin:0 auto 14px auto;
+            "></div>
+
+            <h2 style="
+              font-weight:500;
+              letter-spacing:-0.02em;
+              margin:0;
+            ">
+              New Contact Inquiry
+            </h2>
           </div>
 
           <div style="margin-bottom:24px;">
-            <p style="font-size:10px;letter-spacing:0.2em;color:#999;margin-bottom:6px;">
-              EMAIL
-            </p>
-            <p style="margin:0;font-size:14px;">
-              <a href="mailto:${safeEmail}" style="color:#1a1a1a;text-decoration:none;">
-                ${safeEmail}
-              </a>
-            </p>
+            
+            <div style="margin-bottom:16px;">
+              <p style="
+                font-size:10px;
+                letter-spacing:0.25em;
+                color:#999;
+                margin-bottom:4px;
+              ">
+                NAME
+              </p>
+              <p style="
+                margin:0;
+                font-size:15px;
+                font-weight:500;
+              ">
+                ${safeName}
+              </p>
+            </div>
+
+            <div>
+              <p style="
+                font-size:10px;
+                letter-spacing:0.25em;
+                color:#999;
+                margin-bottom:4px;
+              ">
+                EMAIL
+              </p>
+              <p style="
+                margin:0;
+                font-size:14px;
+              ">
+                <a href="mailto:${safeEmail}" style="color:#1a1a1a;text-decoration:none;">
+                  ${safeEmail}
+                </a>
+              </p>
+            </div>
+
           </div>
 
-          <!-- MESSAGE CARD -->
           <div style="
-            margin-top:20px;
-            padding:20px;
-            border:1px solid rgba(0,0,0,0.08);
+            padding:20px 18px;
+            border:1px solid rgba(0,0,0,0.05);
             background:#fafafa;
           ">
             <p style="
               font-size:10px;
-              letter-spacing:0.25em;
-              color:#999;
-              margin-bottom:12px;
+              letter-spacing:0.3em;
+              color:#aaa;
+              margin-bottom:10px;
             ">
               MESSAGE
             </p>
 
             <p style="
               margin:0;
-              font-size:14px;
-              line-height:1.7;
+              font-size:15px;
+              line-height:1.9;
               color:#1a1a1a;
+              letter-spacing:0.01em;
+              word-break:break-word;
             ">
               ${safeMessage}
             </p>
@@ -131,29 +158,30 @@ export async function POST(request: Request) {
       </div>
     `
 
+    // 🔥 USER MAIL (CLIPPING FIXED)
     const userHtml = `
-      <div style="background: radial-gradient(circle at 50% 0%, #f5f3f1 0%, #e9e6e2 100%);padding:80px 20px;font-family:Helvetica,Arial,sans-serif;">
+      <div style="background: radial-gradient(circle at 50% 0%, #f5f3f1 0%, #e9e6e2 100%);padding:50px 16px;font-family:Helvetica,Arial,sans-serif;">
         <div style="max-width:520px;margin:0 auto;text-align:center;color:#1a1a1a;">
           
-          <div style="letter-spacing:0.4em;font-size:12px;margin-bottom:50px;opacity:0.7;">
+          <div style="letter-spacing:0.4em;font-size:12px;margin-bottom:40px;opacity:0.7;">
             ARVELLA
           </div>
 
-          <h2 style="font-size:24px;font-weight:500;margin-bottom:18px;letter-spacing:-0.02em;">
+          <h2 style="font-size:24px;font-weight:500;margin-bottom:16px;letter-spacing:-0.02em;">
             Message Received.
           </h2>
 
-          <p style="font-size:14px;line-height:1.7;color:#666;margin-bottom:40px;opacity:0.85;">
+          <p style="font-size:14px;line-height:1.7;color:#666;margin-bottom:30px;opacity:0.85;">
             We’ll review your message and respond with intention.
           </p>
 
-          <div style="margin:50px 0 20px 0;padding:28px 26px;border:1px solid rgba(0,0,0,0.08);background:rgba(255,255,255,0.6);text-align:left;">
+          <div style="margin:30px 0 10px 0;padding:26px 24px;border:1px solid rgba(0,0,0,0.08);background:rgba(255,255,255,0.6);text-align:left;">
             
             <p style="
               font-size:10px;
               letter-spacing:0.3em;
               color:#999;
-              margin-bottom:16px;
+              margin-bottom:14px;
             ">
               YOUR MESSAGE
             </p>
@@ -165,13 +193,14 @@ export async function POST(request: Request) {
               font-style:italic;
               opacity:0.85;
               margin:0;
+              word-break:break-word;
             ">
               ${safeMessage}
             </p>
 
           </div>
 
-          <p style="margin-top:25px;font-size:12px;color:#888;font-style:italic;opacity:0.8;">
+          <p style="margin-top:20px;font-size:12px;color:#888;font-style:italic;opacity:0.8;">
             Every message is read with care.
           </p>
 
@@ -185,13 +214,13 @@ export async function POST(request: Request) {
               color:#1a1a1a;
               font-size:11px;
               letter-spacing:0.25em;
-              margin-top:40px;
+              margin-top:30px;
             "
           >
             EXPLORE ARVELLA
           </a>
 
-          <p style="margin-top:60px;font-size:11px;color:#999;opacity:0.6;letter-spacing:0.2em;">
+          <p style="margin-top:40px;font-size:11px;color:#999;opacity:0.6;letter-spacing:0.2em;">
             ARVELLA COLLECTIVE<br />
             Quiet Power, Always.
           </p>
