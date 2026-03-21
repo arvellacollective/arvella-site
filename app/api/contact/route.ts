@@ -69,38 +69,38 @@ export async function POST(request: Request) {
     `
 
     const userHtml = `
-      <div style="background:#f4f2ef;padding:80px 20px;font-family:Helvetica,Arial,sans-serif;">
+      <div style="background: radial-gradient(circle at 50% 0%, #f5f3f1 0%, #e9e6e2 100%);padding:80px 20px;font-family:Helvetica,Arial,sans-serif;">
         <div style="max-width:520px;margin:0 auto;text-align:center;color:#1a1a1a;">
           
-          <div style="letter-spacing:0.5em;font-size:12px;margin-bottom:50px;">
+          <div style="letter-spacing:0.4em;font-size:12px;margin-bottom:50px;opacity:0.7;">
             ARVELLA
           </div>
 
-          <h2 style="font-size:22px;font-weight:400;margin-bottom:24px;">
-            Your message has been received.
+          <h2 style="font-size:24px;font-weight:500;margin-bottom:18px;letter-spacing:-0.02em;">
+            Message Received.
           </h2>
 
-          <p style="font-size:14px;line-height:1.8;color:#666;margin-bottom:40px;">
-            We’ve received your message.<br />
-            Our team will respond shortly.
+          <p style="font-size:14px;line-height:1.7;color:#666;margin-bottom:40px;opacity:0.85;">
+            We’ll review your message and respond with intention.
           </p>
 
-          <!-- 🔥 PREMIUM MESSAGE BLOCK -->
-          <div style="margin:50px 0 30px 0;padding:28px 26px;border:1px solid #e6e6e6;background:#ffffff;text-align:left;">
+          <div style="margin:50px 0 20px 0;padding:28px 26px;border:1px solid rgba(0,0,0,0.08);background:rgba(255,255,255,0.6);text-align:left;">
             
             <p style="
               font-size:10px;
-              letter-spacing:0.25em;
+              letter-spacing:0.3em;
               color:#999;
               margin-bottom:16px;
             ">
-              MESSAGE
+              YOUR MESSAGE
             </p>
 
             <p style="
               font-size:15px;
               line-height:1.8;
               color:#1a1a1a;
+              font-style:italic;
+              opacity:0.85;
               margin:0;
             ">
               ${safeMessage}
@@ -108,24 +108,29 @@ export async function POST(request: Request) {
 
           </div>
 
+          <p style="margin-top:25px;font-size:12px;color:#888;font-style:italic;opacity:0.8;">
+            Every message is read with care.
+          </p>
+
           <a
             href="https://arvellacollective.com"
             style="
               display:inline-block;
-              padding:12px 32px;
+              padding:14px 36px;
               border:1px solid #1a1a1a;
               text-decoration:none;
               color:#1a1a1a;
               font-size:11px;
               letter-spacing:0.25em;
+              margin-top:40px;
             "
           >
-            VISIT ARVELLA
+            EXPLORE ARVELLA
           </a>
 
-          <p style="margin-top:60px;font-size:11px;color:#aaa;">
-            Arvella Collective<br />
-            Quiet Power
+          <p style="margin-top:60px;font-size:11px;color:#999;opacity:0.6;letter-spacing:0.2em;">
+            ARVELLA COLLECTIVE<br />
+            Quiet Power, Always.
           </p>
 
         </div>
