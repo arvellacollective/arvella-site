@@ -5,16 +5,37 @@ import { useState } from "react"
 export default function ContactPage() {
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
+  const [form, setForm] = useState({
+  name: "",
+  email: "",
+  message: "",
+})
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
     setLoading(true)
 
-    await new Promise((res) => setTimeout(res, 1200))
+    try {
+  const res = await fetch("/api/contact", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(form),
+  })
 
-    setLoading(false)
-    setSuccess(true)
+  if (!res.ok) {
+    throw new Error("Failed")
+  }
+
+  setSuccess(true)
+} catch (err) {
+  console.error(err)
+} finally {
+  setLoading(false)
+}
+
   }
 
   return (
@@ -83,6 +104,8 @@ export default function ContactPage() {
 
                 <input
                   type="text"
+  value={form.name}
+  onChange={(e) => setForm({ ...form, name: e.target.value })}
                   required
                   disabled={loading || success}
                   onInvalid={(e) =>
@@ -108,6 +131,8 @@ export default function ContactPage() {
 
                 <input
                   type="email"
+  value={form.email}
+  onChange={(e) => setForm({ ...form, email: e.target.value })}
                   required
                   disabled={loading || success}
                   onInvalid={(e) =>
@@ -133,8 +158,10 @@ export default function ContactPage() {
 
                 <textarea
                   rows={4}
-                  disabled={loading || success}
-                  className="w-full mt-3 outline-none bg-transparent py-3 resize-none relative z-10 disabled:opacity-40"
+  value={form.message}
+  onChange={(e) => setForm({ ...form, message: e.target.value })}
+  disabled={loading || success}
+  className="w-full mt-3 outline-none bg-transparent py-3 resize-none relative z-10 disabled:opacity-40"
                 />
 
                 <div className="absolute left-0 bottom-0 w-full h-[1px] bg-neutral-200" />
