@@ -104,7 +104,18 @@ export default function Footer() {
           <button
             type="submit"
             disabled={loading || success}
-            className="border border-neutral-800 px-7 py-2 text-sm tracking-[0.2em] transition duration-300 hover:bg-neutral-900 hover:text-white disabled:opacity-50"
+            className="
+  border border-neutral-800/60
+  px-7 py-2
+  text-sm tracking-[0.2em]
+  text-neutral-800
+  rounded-[6px]
+  transition-all duration-300 ease-out
+  hover:border-neutral-900
+  hover:bg-neutral-900/5
+  hover:text-neutral-900
+  disabled:opacity-50
+"
           >
             {loading ? "..." : success ? "DONE" : "SEND"}
           </button>

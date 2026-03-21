@@ -33,9 +33,7 @@ export default function Navbar() {
         }
         `}
       >
-        {/* ✅ GRID İLE %100 AYNI CONTAINER */}
         <div className="max-w-[1400px] mx-auto h-full px-6 md:px-8">
-
           <div className="relative flex items-center h-full">
 
             {/* LEFT */}
@@ -72,7 +70,7 @@ export default function Navbar() {
               <Link
                 href="/shop"
                 className="
-px-4 py-2
+px-3 md:px-4 py-2
 border border-black/20
 rounded-[6px]
 text-[12px] tracking-[0.28em]
@@ -83,9 +81,45 @@ hover:text-neutral-900
 hover:bg-black/[0.04]
 
 transition-all duration-300 ease-out
+flex items-center justify-center gap-2
 "
               >
-                SHOP
+
+                {/* Desktop */}
+                <span className="hidden md:flex items-center gap-2">
+                  SHOP
+                  <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
+                    <path
+                      d="M5.5 8H14.5L13.7 15H6.3L5.5 8Z"
+                      stroke="currentColor"
+                      strokeWidth="1.2"
+                    />
+                    <path
+                      d="M7.8 8V6.5C7.8 5.6 8.6 5 10 5C11.4 5 12.2 5.6 12.2 6.5V8"
+                      stroke="currentColor"
+                      strokeWidth="1.2"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                </span>
+
+                {/* Mobile */}
+                <span className="md:hidden">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path
+                      d="M5.5 8H14.5L13.7 15H6.3L5.5 8Z"
+                      stroke="currentColor"
+                      strokeWidth="1.2"
+                    />
+                    <path
+                      d="M7.8 8V6.5C7.8 5.6 8.6 5 10 5C11.4 5 12.2 5.6 12.2 6.5V8"
+                      stroke="currentColor"
+                      strokeWidth="1.2"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                </span>
+
               </Link>
 
               {/* MOBILE MENU */}
@@ -97,9 +131,7 @@ transition-all duration-300 ease-out
               </div>
 
             </div>
-
           </div>
-
         </div>
       </header>
 
