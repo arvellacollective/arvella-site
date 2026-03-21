@@ -128,7 +128,7 @@ export async function POST(request: Request) {
       resend.emails.send({
         from: "Arvella <contact@arvellacollective.com>",
         to: [email],
-        replyTo: "arvellacollective@gmail.com",
+        replyTo: "contact@arvellacollective.com",
         subject: "We received your message — Arvella",
         html: userHtml,
       }),
