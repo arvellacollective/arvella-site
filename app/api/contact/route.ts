@@ -158,7 +158,7 @@ export async function POST(request: Request) {
       </div>
     `
 
-    // 🔥 USER MAIL (CLIPPING FIXED)
+    // 🔥 USER MAIL (BRAND BLOCK MOVED ABOVE MESSAGE)
     const userHtml = `
       <div style="background: radial-gradient(circle at 50% 0%, #f5f3f1 0%, #e9e6e2 100%);padding:50px 16px;font-family:Helvetica,Arial,sans-serif;">
         <div style="max-width:520px;margin:0 auto;text-align:center;color:#1a1a1a;">
@@ -171,11 +171,36 @@ export async function POST(request: Request) {
             Message Received.
           </h2>
 
-          <p style="font-size:14px;line-height:1.7;color:#666;margin-bottom:30px;opacity:0.85;">
+          <p style="font-size:14px;line-height:1.7;color:#666;margin-bottom:22px;opacity:0.85;">
             We’ll review your message and respond with intention.
           </p>
 
-          <div style="margin:30px 0 10px 0;padding:26px 24px;border:1px solid rgba(0,0,0,0.08);background:rgba(255,255,255,0.6);text-align:left;">
+          <p style="margin-top:0;font-size:12px;color:#888;font-style:italic;opacity:0.8;">
+            Every message is read with care.
+          </p>
+
+          <a
+            href="https://arvellacollective.com"
+            style="
+              display:inline-block;
+              padding:14px 36px;
+              border:1px solid #1a1a1a;
+              text-decoration:none;
+              color:#1a1a1a;
+              font-size:11px;
+              letter-spacing:0.25em;
+              margin-top:26px;
+            "
+          >
+            EXPLORE ARVELLA
+          </a>
+
+          <p style="margin-top:34px;font-size:11px;color:#999;opacity:0.6;letter-spacing:0.2em;">
+            ARVELLA COLLECTIVE<br />
+            Quiet Power, Always.
+          </p>
+
+          <div style="margin:34px 0 10px 0;padding:26px 24px;border:1px solid rgba(0,0,0,0.08);background:rgba(255,255,255,0.6);text-align:left;">
             
             <p style="
               font-size:10px;
@@ -199,31 +224,6 @@ export async function POST(request: Request) {
             </p>
 
           </div>
-
-          <p style="margin-top:20px;font-size:12px;color:#888;font-style:italic;opacity:0.8;">
-            Every message is read with care.
-          </p>
-
-          <a
-            href="https://arvellacollective.com"
-            style="
-              display:inline-block;
-              padding:14px 36px;
-              border:1px solid #1a1a1a;
-              text-decoration:none;
-              color:#1a1a1a;
-              font-size:11px;
-              letter-spacing:0.25em;
-              margin-top:30px;
-            "
-          >
-            EXPLORE ARVELLA
-          </a>
-
-          <p style="margin-top:40px;font-size:11px;color:#999;opacity:0.6;letter-spacing:0.2em;">
-            ARVELLA COLLECTIVE<br />
-            Quiet Power, Always.
-          </p>
 
         </div>
       </div>
