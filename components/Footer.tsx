@@ -46,29 +46,22 @@ export default function Footer() {
 
       const data = await res.json()
 
-      console.log("API RESPONSE:", data)
+      if (!res.ok) return
 
-      // ❌ API error
-      if (!res.ok) {
-        console.error("API ERROR:", data.error)
-        return
-      }
-
-      // ✅ success
       if (data.success) {
         setSuccess(true)
         setEmail("")
       }
 
     } catch (err) {
-      console.error("FETCH ERROR:", err)
+      console.error(err)
     } finally {
       setLoading(false)
     }
   }
 
   return (
-    <footer className="relative z-30 mt-32 border-t border-neutral-200 bg-[#f4f2ef]">
+    <footer className="relative z-30 border-t border-neutral-200 bg-[#f4f2ef]">
 
       <div className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-transparent via-[#f4f2ef]/60 to-[#f4f2ef]" />
 
@@ -104,18 +97,7 @@ export default function Footer() {
           <button
             type="submit"
             disabled={loading || success}
-            className="
-  border border-neutral-800/60
-  px-7 py-2
-  text-sm tracking-[0.2em]
-  text-neutral-800
-  rounded-[6px]
-  transition-all duration-300 ease-out
-  hover:border-neutral-900
-  hover:bg-neutral-900/5
-  hover:text-neutral-900
-  disabled:opacity-50
-"
+            className="border border-neutral-800/60 px-7 py-2 text-sm tracking-[0.2em] text-neutral-800 rounded-[6px] transition-all duration-300 ease-out hover:border-neutral-900 hover:bg-neutral-900/5 hover:text-neutral-900 disabled:opacity-50"
           >
             {loading ? "..." : success ? "DONE" : "SEND"}
           </button>
@@ -165,7 +147,39 @@ export default function Footer() {
 
         </div>
 
-        <motion.div variants={footerItem} className="mt-24 text-xs tracking-[0.15em] text-neutral-400">
+        {/* 🔥 PREMIUM DOT LINKS */}
+        <motion.div
+          variants={footerItem}
+          className="mt-20 flex justify-center items-center text-[11px] tracking-[0.2em] text-neutral-400 group"
+        >
+          <Link href="/privacy" className="hover:text-black transition">PRIVACY</Link>
+
+          <span className="mx-4 text-[14px] text-neutral-300 transition group-hover:text-neutral-200">
+            •
+          </span>
+
+          <Link href="/terms" className="hover:text-black transition">TERMS</Link>
+
+          <span className="mx-4 text-[14px] text-neutral-300 transition group-hover:text-neutral-200">
+            •
+          </span>
+
+          <Link href="/shipping" className="hover:text-black transition">SHIPPING</Link>
+
+          <span className="mx-4 text-[14px] text-neutral-300 transition group-hover:text-neutral-200">
+            •
+          </span>
+
+          <Link href="/refund" className="hover:text-black transition">RETURNS</Link>
+
+          <span className="mx-4 text-[14px] text-neutral-300 transition group-hover:text-neutral-200">
+            •
+          </span>
+
+          <Link href="/faq" className="hover:text-black transition">FAQ</Link>
+        </motion.div>
+
+        <motion.div variants={footerItem} className="mt-10 text-xs tracking-[0.15em] text-neutral-400 text-center">
           © {new Date().getFullYear()} ARVELLA COLLECTIVE
         </motion.div>
 
