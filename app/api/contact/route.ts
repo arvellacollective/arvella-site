@@ -46,24 +46,87 @@ export async function POST(request: Request) {
     const safeEmail = escapeHtml(email)
     const safeMessage = escapeHtml(message).replace(/\n/g, "<br />")
 
+    // 🔥 PREMIUM ADMIN MAIL
     const adminHtml = `
-      <div style="background:#f4f2ef;padding:40px 20px;font-family:Helvetica,Arial,sans-serif;">
-        <div style="max-width:520px;margin:0 auto;background:#ffffff;padding:30px;color:#1a1a1a;">
-          <p style="font-size:10px;letter-spacing:0.2em;color:#999;text-align:center;margin-bottom:20px;">
-            CONTACT FORM
+      <div style="
+        background: radial-gradient(circle at 50% 0%, #f5f3f1 0%, #e9e6e2 100%);
+        padding:40px 20px;
+        font-family:Helvetica,Arial,sans-serif;
+      ">
+        <div style="
+          max-width:520px;
+          margin:0 auto;
+          background:#ffffff;
+          padding:34px 30px;
+          color:#1a1a1a;
+        ">
+          
+          <p style="
+            font-size:10px;
+            letter-spacing:0.3em;
+            color:#999;
+            text-align:center;
+            margin-bottom:18px;
+          ">
+            ARVELLA CONTACT
           </p>
 
-          <h2 style="text-align:center;font-weight:500;margin-bottom:20px;">
-            New Contact Message
+          <h2 style="
+            text-align:center;
+            font-weight:500;
+            margin-bottom:28px;
+            letter-spacing:-0.02em;
+          ">
+            New Contact Inquiry
           </h2>
 
-          <p><strong>Name:</strong><br /> ${safeName}</p>
-          <p><strong>Email:</strong><br /> ${safeEmail}</p>
-
-          <div style="margin-top:20px;padding:16px;border:1px solid #eee;background:#fafafa;">
-            <p><strong>Message</strong></p>
-            <p style="white-space:normal;">${safeMessage}</p>
+          <!-- INFO BLOCK -->
+          <div style="margin-bottom:20px;">
+            <p style="font-size:10px;letter-spacing:0.2em;color:#999;margin-bottom:6px;">
+              NAME
+            </p>
+            <p style="margin:0;font-size:14px;color:#1a1a1a;">
+              ${safeName}
+            </p>
           </div>
+
+          <div style="margin-bottom:24px;">
+            <p style="font-size:10px;letter-spacing:0.2em;color:#999;margin-bottom:6px;">
+              EMAIL
+            </p>
+            <p style="margin:0;font-size:14px;">
+              <a href="mailto:${safeEmail}" style="color:#1a1a1a;text-decoration:none;">
+                ${safeEmail}
+              </a>
+            </p>
+          </div>
+
+          <!-- MESSAGE CARD -->
+          <div style="
+            margin-top:20px;
+            padding:20px;
+            border:1px solid rgba(0,0,0,0.08);
+            background:#fafafa;
+          ">
+            <p style="
+              font-size:10px;
+              letter-spacing:0.25em;
+              color:#999;
+              margin-bottom:12px;
+            ">
+              MESSAGE
+            </p>
+
+            <p style="
+              margin:0;
+              font-size:14px;
+              line-height:1.7;
+              color:#1a1a1a;
+            ">
+              ${safeMessage}
+            </p>
+          </div>
+
         </div>
       </div>
     `
