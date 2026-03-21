@@ -71,6 +71,7 @@ export async function POST(request: Request) {
     const userHtml = `
       <div style="background:#f4f2ef;padding:80px 20px;font-family:Helvetica,Arial,sans-serif;">
         <div style="max-width:520px;margin:0 auto;text-align:center;color:#1a1a1a;">
+          
           <div style="letter-spacing:0.5em;font-size:12px;margin-bottom:50px;">
             ARVELLA
           </div>
@@ -84,14 +85,27 @@ export async function POST(request: Request) {
             Our team will respond shortly.
           </p>
 
-          <div style="margin:40px 0;padding:20px;border:1px solid #eaeaea;background:#fafafa;text-align:left;">
-            <p style="font-size:11px;letter-spacing:0.15em;color:#999;margin-bottom:10px;">
-              YOUR MESSAGE
+          <!-- 🔥 PREMIUM MESSAGE BLOCK -->
+          <div style="margin:50px 0 30px 0;padding:28px 26px;border:1px solid #e6e6e6;background:#ffffff;text-align:left;">
+            
+            <p style="
+              font-size:10px;
+              letter-spacing:0.25em;
+              color:#999;
+              margin-bottom:16px;
+            ">
+              MESSAGE
             </p>
 
-            <p style="font-size:14px;line-height:1.6;color:#1a1a1a;white-space:normal;">
+            <p style="
+              font-size:15px;
+              line-height:1.8;
+              color:#1a1a1a;
+              margin:0;
+            ">
               ${safeMessage}
             </p>
+
           </div>
 
           <a
@@ -113,6 +127,7 @@ export async function POST(request: Request) {
             Arvella Collective<br />
             Quiet Power
           </p>
+
         </div>
       </div>
     `
